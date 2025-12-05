@@ -1,0 +1,189 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Light mode colors */
+    --bg-primary: #f8fafc;
+    --bg-secondary: #f1f5f9;
+    
+    /* Glass & Surfaces */
+    --glass-bg: rgba(0, 0, 0, 0.04);
+    --glass-border: rgba(0, 0, 0, 0.08);
+    --glass-hover: rgba(0, 0, 0, 0.06);
+    
+    /* Accent Colors */
+    --accent-primary: #06b6d4;
+    --accent-secondary: #7c3aed;
+    --accent-neon: #00e5ff;
+    
+    /* Text Colors */
+    --text-primary: #1e293b;
+    --text-secondary: #475569;
+    --text-muted: #64748b;
+    
+    /* Shadows */
+    --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.1);
+    --shadow-neon: 0 0 20px rgba(0, 229, 255, 0.2);
+    --shadow-soft: 0 4px 16px rgba(0, 0, 0, 0.1);
+  }
+
+  .dark {
+    /* Dark mode colors */
+    --bg-primary: #060810;
+    --bg-secondary: #0b1220;
+    
+    /* Glass & Surfaces */
+    --glass-bg: rgba(255, 255, 255, 0.04);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-hover: rgba(255, 255, 255, 0.06);
+    
+    /* Accent Colors */
+    --accent-primary: #06b6d4;
+    --accent-secondary: #7c3aed;
+    --accent-neon: #00e5ff;
+    
+    /* Text Colors */
+    --text-primary: #e6eef2;
+    --text-secondary: #9aa4b2;
+    --text-muted: #6b7280;
+    
+    /* Shadows */
+    --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.4);
+    --shadow-neon: 0 0 20px rgba(0, 229, 255, 0.3);
+    --shadow-soft: 0 4px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  body {
+    @apply bg-bg-primary text-text-primary antialiased;
+    font-family: var(--font-geist-sans, system-ui, -apple-system, sans-serif);
+    min-height: 100vh;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  body:not(.dark) {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  }
+
+  body.dark {
+    background: linear-gradient(135deg, #060810 0%, #0b1220 100%);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-bg-secondary;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-glass-border rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-glass-hover;
+  }
+
+  /* Focus ring for accessibility */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-accent-primary ring-offset-2 ring-offset-bg-primary;
+  }
+}
+
+@layer components {
+  /* Glass card utility */
+  .glass-card {
+    @apply backdrop-blur-xl bg-white/[0.04] border border-white/[0.08] rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.4)] transition-all duration-300;
+  }
+
+  .glass-card-hover {
+    @apply glass-card hover:bg-white/[0.06] hover:border-white/[0.12];
+  }
+
+  /* Glass card with neon accent */
+  .glass-card-neon {
+    @apply glass-card shadow-[0_8px_32px_rgba(0,0,0,0.4),0_0_20px_rgba(0,229,255,0.1)];
+  }
+
+  .glass-card-neon-hover {
+    @apply glass-card-neon hover:shadow-[0_8px_32px_rgba(0,0,0,0.4),0_0_30px_rgba(0,229,255,0.2)];
+  }
+
+  /* Neumorphic button */
+  .neomorph-button {
+    @apply bg-gradient-to-br from-gray-800/50 to-gray-900/50 
+           shadow-[inset_2px_2px_5px_rgba(255,255,255,0.05),inset_-2px_-2px_5px_rgba(0,0,0,0.5)] 
+           active:shadow-[inset_1px_1px_3px_rgba(255,255,255,0.08),inset_-1px_-1px_3px_rgba(0,0,0,0.6)] 
+           transition-all duration-200 
+           text-white font-semibold;
+  }
+
+  .neomorph-button:hover {
+    @apply scale-[1.02];
+  }
+
+  .neomorph-button:active {
+    @apply scale-[0.98];
+  }
+
+  /* Text gradient utilities */
+  .text-gradient-primary {
+    @apply bg-gradient-to-r from-accent-primary to-accent-neon bg-clip-text text-transparent;
+  }
+
+  .text-gradient-secondary {
+    @apply bg-gradient-to-r from-accent-secondary to-accent-primary bg-clip-text text-transparent;
+  }
+}
+
+@layer utilities {
+  /* Animation utilities */
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out;
+  }
+
+  /* Safe area utilities for mobile */
+  .safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Keyframes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
