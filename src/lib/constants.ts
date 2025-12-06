@@ -113,46 +113,55 @@ export const SKILLS: Skill[] = [
     name: 'Next.js',
     level: 95,
     category: 'frontend',
+    icon: 'Boxes',
   },
   {
     name: 'React',
     level: 95,
     category: 'frontend',
+    icon: 'Component',
   },
   {
     name: 'TypeScript',
     level: 90,
     category: 'frontend',
+    icon: 'Code',
   },
   {
     name: 'Node.js',
     level: 85,
     category: 'backend',
+    icon: 'Server',
   },
   {
     name: 'Express.js',
     level: 85,
     category: 'backend',
+    icon: 'Zap',
   },
   {
     name: 'JavaScript',
     level: 95,
     category: 'frontend',
+    icon: 'FileCode',
   },
   {
     name: 'Tailwind CSS',
     level: 90,
     category: 'tool',
+    icon: 'Palette',
   },
   {
     name: 'MongoDB',
     level: 80,
     category: 'tool',
+    icon: 'Database',
   },
   {
     name: 'PostgreSQL',
     level: 80,
     category: 'tool',
+    icon: 'DatabaseZap',
   },
 ];
 
