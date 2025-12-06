@@ -1,4 +1,5 @@
-import type { Metadata } from 'next';
+'use client';
+
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ChevronRight, Home, Code, Zap, Accessibility, Sparkles } from 'lucide-react';
@@ -8,17 +9,6 @@ import { Skills } from '@/components/sections/Skills';
 import { Experience } from '@/components/sections/Experience';
 import { PERSONAL_INFO } from '@/lib/constants';
 import { fadeInUp, staggerContainer } from '@/lib/animations';
-
-export const metadata: Metadata = {
-  title: 'About',
-  description:
-    'Learn more about Ali Kiani, Senior Frontend Developer with 10+ years of experience in React, Next.js, and modern web technologies.',
-  openGraph: {
-    title: 'About | Ali Kiani',
-    description:
-      'Learn more about Ali Kiani, Senior Frontend Developer with 10+ years of experience.',
-  },
-};
 
 const coreValues = [
   {
