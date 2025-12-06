@@ -3,7 +3,7 @@
  * Following the structure from .cursorrules
  */
 
-import type { PersonalInfo, Project } from './types';
+import type { PersonalInfo, Project, Skill, Experience } from './types';
 
 export const PERSONAL_INFO: PersonalInfo = {
   name: 'Ali Kiani',
@@ -107,4 +107,77 @@ export const SOCIAL_LINKS = [
     icon: 'mail',
   },
 ] as const;
+
+export const SKILLS: Skill[] = [
+  {
+    name: 'Next.js',
+    level: 95,
+    category: 'frontend',
+  },
+  {
+    name: 'React',
+    level: 95,
+    category: 'frontend',
+  },
+  {
+    name: 'TypeScript',
+    level: 90,
+    category: 'frontend',
+  },
+  {
+    name: 'Node.js',
+    level: 85,
+    category: 'backend',
+  },
+  {
+    name: 'Express.js',
+    level: 85,
+    category: 'backend',
+  },
+  {
+    name: 'JavaScript',
+    level: 95,
+    category: 'frontend',
+  },
+  {
+    name: 'Tailwind CSS',
+    level: 90,
+    category: 'tool',
+  },
+  {
+    name: 'MongoDB',
+    level: 80,
+    category: 'tool',
+  },
+  {
+    name: 'PostgreSQL',
+    level: 80,
+    category: 'tool',
+  },
+];
+
+export const EXPERIENCES: Experience[] = [
+  {
+    id: 1,
+    role: 'IT Admin & Manager',
+    company: 'TEDA Medical Engineering Company',
+    startDate: '2010',
+    endDate: '2020',
+    current: false,
+    description: ['Managed IT infrastructure and technical systems'],
+    tech: [],
+  },
+  {
+    id: 2,
+    role: 'Freelance Frontend Developer',
+    company: 'Self-employed',
+    startDate: '2020',
+    current: true,
+    description: [
+      'Building modern web applications for clients worldwide',
+      'Specializing in React, Next.js, and TypeScript',
+    ],
+    tech: ['React', 'Next.js', 'TypeScript'],
+  },
+];
 
