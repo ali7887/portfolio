@@ -2,8 +2,6 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Hero } from '@/components/sections/Hero';
 import { Projects } from '@/components/sections/Projects';
-import { Skills } from '@/components/sections/Skills';
-import { Experience } from '@/components/sections/Experience';
 
 /**
  * Homepage - Main landing page
@@ -17,8 +15,9 @@ export default function HomePage() {
         <Hero />
         {/* Featured projects preview */}
         <Projects showFilters={false} limit={3} />
-        <Skills />
-        <Experience />
+        {/* Placeholder sections for Phase 2 */}
+        {/* <SkillsPreview /> */}
+        {/* <CTASection /> */}
       </main>
       <Footer />
     </>
