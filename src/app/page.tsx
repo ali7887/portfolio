@@ -1,11 +1,16 @@
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Hero } from '@/components/sections/Hero';
+import { AboutIntro } from '@/components/sections/AboutIntro';
+import { Stats } from '@/components/sections/Stats';
+import { Skills } from '@/components/sections/Skills';
 import { Projects } from '@/components/sections/Projects';
+import { Experience } from '@/components/sections/Experience';
+import { Contact } from '@/components/sections/Contact';
 
 /**
- * Homepage - Main landing page
- * Features Hero section with scroll-triggered animations
+ * Homepage - Single-page portfolio
+ * Features all sections in one smooth scrolling experience
  */
 export default function HomePage() {
   return (
@@ -13,11 +18,12 @@ export default function HomePage() {
       <Header />
       <main className="min-h-screen">
         <Hero />
-        {/* Featured projects preview */}
-        <Projects showFilters={false} limit={3} />
-        {/* Placeholder sections for Phase 2 */}
-        {/* <SkillsPreview /> */}
-        {/* <CTASection /> */}
+        <AboutIntro />
+        <Stats />
+        <Skills />
+        <Projects showFilters={false} limit={4} />
+        <Experience />
+        <Contact />
       </main>
       <Footer />
     </>

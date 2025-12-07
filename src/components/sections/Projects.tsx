@@ -1,8 +1,9 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Filter } from 'lucide-react';
+import { X, Filter, ArrowRight } from 'lucide-react';
 import { ProjectCard } from '@/components/shared/ProjectCard';
 import { PROJECTS } from '@/lib/constants';
 import type { Project } from '@/lib/types';
@@ -155,6 +156,31 @@ export function Projects({ showFilters = true, limit }: ProjectsProps) {
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* View All button (when limit is set) */}
+        {limit && displayedProjects.length >= limit && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-center mt-8"
+          >
+            <Link
+              href="/projects"
+              className={cn(
+                'neomorph-button px-8 py-3 rounded-lg',
+                'inline-flex items-center gap-2',
+                'text-white font-semibold',
+                'hover:scale-105 transition-transform',
+                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary'
+              )}
+            >
+              <span>View All Projects</span>
+              <ArrowRight className="w-5 h-5" />
+            </Link>
+          </motion.div>
+        )}
       </div>
 
       {/* Project detail modal */}

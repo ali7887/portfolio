@@ -10,7 +10,6 @@ import { cn } from '@/lib/utils';
 
 const navLinks = [
   { name: 'Home', href: '/' },
-  { name: 'About', href: '/about' },
   { name: 'Projects', href: '/projects' },
   { name: 'Contact', href: '#contact' },
 ];
@@ -63,11 +62,26 @@ export function Header() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => {
-              const isActive = pathname === link.href;
+              const isActive = pathname === link.href || (link.href.startsWith('#') && pathname === '/');
               return (
                 <Link
                   key={link.href}
                   href={link.href}
+                  onClick={(e) => {
+                    if (link.href.startsWith('#')) {
+                      e.preventDefault();
+                      const element = document.querySelector(link.href);
+                      if (element) {
+                        const headerOffset = 80;
+                        const elementPosition = element.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                        window.scrollTo({
+                          top: offsetPosition,
+                          behavior: 'smooth',
+                        });
+                      }
+                    }
+                  }}
                   className={cn(
                     'relative text-sm font-medium transition-colors',
                     isActive
@@ -153,7 +167,14 @@ export function Header() {
                     >
                       <Link
                         href={link.href}
-                        onClick={closeMenu}
+                        onClick={(e) => {
+                          closeMenu();
+                          if (link.href.startsWith('#')) {
+                            e.preventDefault();
+                            const element = document.querySelector(link.href);
+                            element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                          }
+                        }}
                         className={cn(
                           'block px-4 py-3 rounded-lg text-base font-medium transition-colors',
                           isActive
