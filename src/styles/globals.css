@@ -5,8 +5,9 @@
 @layer base {
   :root {
     /* Dark mode (default) */
-    --bg-primary: #060810;
-    --bg-secondary: #0b1220;
+    --bg-primary: #0B1120;
+    --bg-secondary: #111827;
+    --bg-card: #1F2937;
     
     /* Glass & Surfaces */
     --glass-bg: rgba(255, 255, 255, 0.04);
@@ -14,13 +15,13 @@
     --glass-hover: rgba(255, 255, 255, 0.06);
     
     /* Accent Colors */
-    --accent-primary: #06b6d4;
-    --accent-secondary: #7c3aed;
+    --accent-primary: #38BDF8;
+    --accent-secondary: #0EA5E9;
     --accent-neon: #00e5ff;
     
     /* Text Colors */
-    --text-primary: #e6eef2;
-    --text-secondary: #9aa4b2;
+    --text-primary: #E2E8F0;
+    --text-secondary: #94A3B8;
     --text-muted: #6b7280;
     
     /* Shadows */
@@ -31,9 +32,9 @@
 
   .light {
     /* Light mode - Professional & Readable */
-    --bg-primary: #ffffff;
-    --bg-secondary: #f8fafc;
-    --bg-tertiary: #f1f5f9;
+    --bg-primary: #F8FAFC;
+    --bg-secondary: #FFFFFF;
+    --bg-card: #FFFFFF;
     
     /* Glass & Surfaces */
     --glass-bg: rgba(15, 23, 42, 0.03);
@@ -41,25 +42,27 @@
     --glass-hover: rgba(15, 23, 42, 0.05);
     
     /* Accent Colors - Darker for visibility */
-    --accent-primary: #0891b2;
-    --accent-secondary: #7c3aed;
-    --accent-neon: #06b6d4;
+    --accent-primary: #0284C7;
+    --accent-secondary: #0369A1;
+    --accent-neon: #0284C7;
     
-    /* Text Colors - Pure black for maximum readability */
-    --text-primary: #0f172a;
-    --text-secondary: #475569;
+    /* Text Colors - Professional dark gray */
+    --text-primary: #334155;
+    --text-secondary: #64748B;
     --text-muted: #64748b;
     
     /* Shadows - Softer for light mode */
     --shadow-glass: 0 4px 20px rgba(0, 0, 0, 0.05);
-    --shadow-neon: 0 0 20px rgba(8, 145, 178, 0.2);
+    --shadow-neon: 0 0 20px rgba(2, 132, 199, 0.2);
     --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.08);
+    --border: #E2E8F0;
   }
 
   .dark {
     /* Dark mode colors */
-    --bg-primary: #060810;
-    --bg-secondary: #0b1220;
+    --bg-primary: #0B1120;
+    --bg-secondary: #111827;
+    --bg-card: #1F2937;
     
     /* Glass & Surfaces */
     --glass-bg: rgba(255, 255, 255, 0.04);
@@ -67,13 +70,13 @@
     --glass-hover: rgba(255, 255, 255, 0.06);
     
     /* Accent Colors */
-    --accent-primary: #06b6d4;
-    --accent-secondary: #7c3aed;
+    --accent-primary: #38BDF8;
+    --accent-secondary: #0EA5E9;
     --accent-neon: #00e5ff;
     
     /* Text Colors */
-    --text-primary: #e6eef2;
-    --text-secondary: #9aa4b2;
+    --text-primary: #E2E8F0;
+    --text-secondary: #94A3B8;
     --text-muted: #6b7280;
     
     /* Shadows */
@@ -82,26 +85,31 @@
     --shadow-soft: 0 4px 16px rgba(0, 0, 0, 0.2);
   }
 
-  /* Force pure black text in light mode for all text elements */
+  /* Force readable text in light mode for all text elements */
   .light h1,
   .light h2,
   .light h3,
   .light h4,
   .light h5,
-  .light h6,
+  .light h6 {
+    color: #334155 !important;
+  }
+
   .light p,
-  .light span,
-  .light a:not(.neomorph-button),
-  .light li {
-    color: #0f172a !important;
+  .light span {
+    color: #475569 !important;
+  }
+
+  .light a {
+    color: #334155 !important;
   }
 
   .light .text-text-primary {
-    color: #0f172a !important;
+    color: #334155 !important;
   }
 
   .light .text-text-secondary {
-    color: #475569 !important;
+    color: #64748B !important;
   }
 
   .light .text-text-muted {
@@ -116,11 +124,11 @@
   }
 
   body:not(.dark) {
-    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    background: #F8FAFC;
   }
 
   body.dark {
-    background: linear-gradient(135deg, #060810 0%, #0b1220 100%);
+    background: linear-gradient(135deg, #0B1120 0%, #111827 100%);
   }
 
   html {
@@ -302,5 +310,64 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Light Mode Professional Fixes */
+.light {
+  background: #F8FAFC;
+}
+
+/* Light Mode Header */
+.light header {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #E2E8F0 !important;
+}
+
+.light nav a {
+  color: #334155 !important;
+  font-weight: 500;
+}
+
+.light nav a:hover {
+  color: #0284C7 !important;
+}
+
+/* Light Mode Buttons */
+.light button {
+  color: #334155 !important;
+}
+
+.light .neomorph-button,
+.light button[type="submit"] {
+  background: #0284C7 !important;
+  color: white !important;
+}
+
+/* Light Mode Cards */
+.light .glass-card,
+.light .glass-card-hover,
+.light .glass-card-neon {
+  background: white !important;
+  border: 1px solid #E2E8F0 !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05) !important;
+}
+
+.light .glass-card:hover {
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Light Mode Text Gradient */
+.light .text-gradient-primary {
+  background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Light Mode Footer */
+.light footer {
+  background: white !important;
+  border-top: 1px solid #E2E8F0 !important;
 }
 

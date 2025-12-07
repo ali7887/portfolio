@@ -10,35 +10,32 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Dark mode colors (default)
-        'bg-primary': '#060810',
-        'bg-secondary': '#0b1220',
-        'bg-tertiary': '#0f172a',
+        // Dark mode colors (updated)
+        'bg-primary': '#0B1120',
+        'bg-secondary': '#111827',
+        'bg-card': '#1F2937',
         // Glass & surfaces
         'glass-bg': 'rgba(255, 255, 255, 0.04)',
         'glass-border': 'rgba(255, 255, 255, 0.08)',
         'glass-hover': 'rgba(255, 255, 255, 0.06)',
         // Accent colors
-        'accent-primary': '#06b6d4',
-        'accent-secondary': '#7c3aed',
+        'accent-primary': '#38BDF8',
+        'accent-secondary': '#0EA5E9',
         'accent-neon': '#00e5ff',
         // Text colors
-        'text-primary': '#e6eef2',
-        'text-secondary': '#9aa4b2',
+        'text-primary': '#E2E8F0',
+        'text-secondary': '#94A3B8',
         'text-muted': '#6b7280',
         // Light mode colors
         light: {
-          'bg-primary': '#ffffff',
-          'bg-secondary': '#f8fafc',
-          'bg-tertiary': '#f1f5f9',
-          'surface': '#ffffff',
-          'border': '#e2e8f0',
-          'text-primary': '#0f172a',
-          'text-secondary': '#475569',
-          'text-muted': '#64748b',
-          'accent-primary': '#0891b2',
-          'accent-secondary': '#7c3aed',
-          'shadow': 'rgba(0, 0, 0, 0.1)',
+          'bg-primary': '#F8FAFC',
+          'bg-secondary': '#FFFFFF',
+          'bg-card': '#FFFFFF',
+          'accent-primary': '#0284C7',
+          'accent-secondary': '#0369A1',
+          'text-primary': '#334155',
+          'text-secondary': '#64748B',
+          'border': '#E2E8F0',
         },
       },
       backgroundImage: {
