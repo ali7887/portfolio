@@ -33,7 +33,8 @@ export interface Skill {
   name: string;
   level: number; // 0-100
   category: 'frontend' | 'backend' | 'tool' | 'specialization';
-  icon?: string;
+  icon?: string; // Legacy Lucide icon name
+  iconName?: string; // Simple-icons brand name
 }
 
 export interface Experience {

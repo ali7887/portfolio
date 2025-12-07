@@ -1,7 +1,9 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import * as LucideIcons from 'lucide-react';
+import { useMemo } from 'react';
+import { si } from 'simple-icons';
+import { Code } from 'lucide-react';
 import { fadeInUp } from '@/lib/animations';
 import { cn } from '@/lib/utils';
 import type { Skill } from '@/lib/types';
@@ -12,16 +14,39 @@ interface SkillCardProps {
 }
 
 /**
- * SkillCard - Simple card component for displaying skill names with icons
+ * SkillCard - Simple card component for displaying skill names with brand icons
  * Features glass card styling with hover effects and animations
  */
 export function SkillCard({ skill, index = 0 }: SkillCardProps) {
-  // Dynamically get icon component from lucide-react
-  const IconComponent = skill.icon
-    ? (LucideIcons[skill.icon as keyof typeof LucideIcons] as React.ComponentType<{
-        className?: string;
-      }>)
-    : null;
+  // Get icon data from simple-icons
+  const iconData = useMemo(() => {
+    if (!skill.iconName) return null;
+    
+    try {
+      const iconKey = skill.iconName as keyof typeof si;
+      return si[iconKey] || null;
+    } catch {
+      return null;
+    }
+  }, [skill.iconName]);
+
+  // Create SVG path from icon data
+  const iconSvg = useMemo(() => {
+    if (!iconData) return null;
+    
+    return (
+      <svg
+        role="img"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+        className="w-12 h-12"
+        fill="currentColor"
+      >
+        <title>{iconData.title}</title>
+        <path d={iconData.path} />
+      </svg>
+    );
+  }, [iconData]);
 
   return (
     <motion.div
@@ -43,17 +68,21 @@ export function SkillCard({ skill, index = 0 }: SkillCardProps) {
       )}
     >
       {/* Icon */}
-      {IconComponent && (
-        <motion.div
-          whileHover={{
-            scale: 1.1,
-            filter: 'drop-shadow(0 0 8px rgba(6, 182, 212, 0.5))',
-          }}
-          transition={{ duration: 0.2 }}
-        >
-          <IconComponent className="w-8 h-8 text-accent-primary" />
-        </motion.div>
-      )}
+      <motion.div
+        className="flex items-center justify-center"
+        whileHover={{
+          scale: 1.1,
+          filter: 'drop-shadow(0 0 12px currentColor)',
+        }}
+        transition={{ duration: 0.2 }}
+        style={{
+          color: iconData ? `#${iconData.hex}` : 'var(--accent-primary)',
+        }}
+      >
+        {iconSvg || (
+          <Code className="w-12 h-12 text-accent-primary" />
+        )}
+      </motion.div>
 
       {/* Skill name */}
       <span className="text-lg font-semibold text-text-primary">{skill.name}</span>
