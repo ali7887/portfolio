@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useMemo } from 'react';
-import { si } from 'simple-icons';
+import * as simpleIcons from 'simple-icons';
 import { Code } from 'lucide-react';
 import { fadeInUp } from '@/lib/animations';
 import { cn } from '@/lib/utils';
@@ -23,8 +23,10 @@ export function SkillCard({ skill, index = 0 }: SkillCardProps) {
     if (!skill.iconName) return null;
     
     try {
-      const iconKey = skill.iconName as keyof typeof si;
-      return si[iconKey] || null;
+      // Convert iconName to simple-icons format
+      // e.g., "nextdotjs" → "siNextdotjs"
+      const iconKey = `si${skill.iconName.charAt(0).toUpperCase()}${skill.iconName.slice(1)}`;
+      return simpleIcons[iconKey as keyof typeof simpleIcons];
     } catch {
       return null;
     }
