@@ -9,10 +9,10 @@ import { ThemeToggle } from '@/components/shared/ThemeToggle';
 import { cn } from '@/lib/utils';
 
 const navLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/about', label: 'About' },
-  { href: '/projects', label: 'Projects' },
-  { href: '/contact', label: 'Contact' },
+  { name: 'Home', href: '/' },
+  { name: 'About', href: '/about' },
+  { name: 'Projects', href: '/projects' },
+  { name: 'Contact', href: '#contact' },
 ];
 
 /**
@@ -75,7 +75,7 @@ export function Header() {
                       : 'text-text-secondary hover:text-text-primary'
                   )}
                 >
-                  {link.label}
+                  {link.name}
                   {isActive && (
                     <motion.div
                       layoutId="activeIndicator"
@@ -161,7 +161,7 @@ export function Header() {
                             : 'text-text-secondary hover:bg-white/[0.06] hover:text-text-primary'
                         )}
                       >
-                        {link.label}
+                        {link.name}
                       </Link>
                     </motion.div>
                   );
