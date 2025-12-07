@@ -3,7 +3,6 @@
 import { motion } from 'framer-motion';
 import { PERSONAL_INFO } from '@/lib/constants';
 import { fadeInUp, staggerContainer } from '@/lib/animations';
-import { cn } from '@/lib/utils';
 
 /**
  * AboutIntro - Short bio section for single-page portfolio

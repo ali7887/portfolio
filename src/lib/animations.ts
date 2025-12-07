@@ -64,7 +64,7 @@ export const scaleIn: Variants = {
  * Glow pulse animation for neon effects
  * Subtle pulsing shadow effect
  */
-export const glowPulse: Variants = {
+export const glowPulse = {
   animate: {
     boxShadow: [
       '0 0 20px rgba(0, 229, 255, 0.3)',

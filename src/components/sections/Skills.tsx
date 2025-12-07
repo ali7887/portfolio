@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { SkillCard } from '@/components/shared/SkillCard';
 import { SKILLS } from '@/lib/constants';
-import { staggerContainer, fadeInUp } from '@/lib/animations';
+import { staggerContainer } from '@/lib/animations';
 
 /**
  * Skills - Grid layout section for displaying skills

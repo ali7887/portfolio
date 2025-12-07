@@ -3,7 +3,7 @@
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Filter, ArrowRight } from 'lucide-react';
+import { X, ArrowRight } from 'lucide-react';
 import { ProjectCard } from '@/components/shared/ProjectCard';
 import { PROJECTS } from '@/lib/constants';
 import type { Project } from '@/lib/types';
@@ -22,15 +22,6 @@ interface ProjectsProps {
 export function Projects({ showFilters = true, limit }: ProjectsProps) {
   const [selectedFilter, setSelectedFilter] = useState<string>('all');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-
-  // Extract all unique tech stacks for filters
-  const allTech = useMemo(() => {
-    const techSet = new Set<string>();
-    PROJECTS.forEach((project) => {
-      project.tech.forEach((t) => techSet.add(t.toLowerCase()));
-    });
-    return Array.from(techSet).sort();
-  }, []);
 
   // Filter projects based on selected filter
   const filteredProjects = useMemo(() => {

@@ -1,7 +1,6 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { ExternalLink, Github, Star } from 'lucide-react';
 import type { Project } from '@/lib/types';
 import { cn } from '@/lib/utils';
