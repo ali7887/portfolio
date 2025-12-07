@@ -10,9 +10,10 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Background colors
+        // Dark mode colors (default)
         'bg-primary': '#060810',
         'bg-secondary': '#0b1220',
+        'bg-tertiary': '#0f172a',
         // Glass & surfaces
         'glass-bg': 'rgba(255, 255, 255, 0.04)',
         'glass-border': 'rgba(255, 255, 255, 0.08)',
@@ -25,11 +26,28 @@ const config: Config = {
         'text-primary': '#e6eef2',
         'text-secondary': '#9aa4b2',
         'text-muted': '#6b7280',
+        // Light mode colors
+        light: {
+          'bg-primary': '#ffffff',
+          'bg-secondary': '#f8fafc',
+          'bg-tertiary': '#f1f5f9',
+          'surface': '#ffffff',
+          'border': '#e2e8f0',
+          'text-primary': '#0f172a',
+          'text-secondary': '#475569',
+          'text-muted': '#64748b',
+          'accent-primary': '#0891b2',
+          'accent-secondary': '#7c3aed',
+          'shadow': 'rgba(0, 0, 0, 0.1)',
+        },
       },
       backgroundImage: {
         'gradient-primary': 'linear-gradient(135deg, #060810 0%, #0b1220 100%)',
         'gradient-accent': 'linear-gradient(135deg, #06b6d4 0%, #00e5ff 100%)',
         'gradient-purple': 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
+        // Light mode gradients
+        'gradient-primary-light': 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
+        'gradient-accent-light': 'linear-gradient(135deg, #0891b2 0%, #7c3aed 100%)',
       },
       boxShadow: {
         glass: '0 8px 32px rgba(0, 0, 0, 0.4)',

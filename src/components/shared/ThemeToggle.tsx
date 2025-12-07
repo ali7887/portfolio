@@ -27,10 +27,14 @@ export function ThemeToggle() {
     // Update both html and body classes
     if (shouldBeDark) {
       document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
       document.body.classList.add('dark');
+      document.body.classList.remove('light');
     } else {
       document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
       document.body.classList.remove('dark');
+      document.body.classList.add('light');
     }
   }, []);
 
@@ -41,10 +45,14 @@ export function ThemeToggle() {
     // Update both html and body classes
     if (newTheme) {
       document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
       document.body.classList.add('dark');
+      document.body.classList.remove('light');
     } else {
       document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
       document.body.classList.remove('dark');
+      document.body.classList.add('light');
     }
     
     localStorage.setItem('theme', newTheme ? 'dark' : 'light');
