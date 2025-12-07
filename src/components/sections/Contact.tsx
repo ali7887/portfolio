@@ -69,7 +69,7 @@ export function Contact() {
             Get in Touch
           </h2>
           <p className="text-lg text-text-secondary max-w-2xl mx-auto">
-            Have a project in mind? Let's discuss how we can work together.
+            Have a project in mind? Let&apos;s discuss how we can work together.
           </p>
         </motion.div>
 
@@ -204,7 +204,7 @@ export function Contact() {
                     animate={{ opacity: 1, y: 0 }}
                     className="p-4 rounded-lg bg-green-500/20 border border-green-500/50 text-green-400"
                   >
-                    Message sent successfully! I'll get back to you soon.
+                    Message sent successfully! I&apos;ll get back to you soon.
                   </motion.div>
                 )}
 

@@ -34,7 +34,7 @@ export function AboutIntro() {
               </div>
 
               <p className="text-text-secondary leading-relaxed text-lg">
-                I'm <span className="text-accent-neon font-semibold">{PERSONAL_INFO.name}</span>, a{' '}
+                I&apos;m <span className="text-accent-neon font-semibold">{PERSONAL_INFO.name}</span>, a{' '}
                 <span className="text-accent-primary font-medium">{PERSONAL_INFO.role}</span> with{' '}
                 <span className="text-accent-neon font-semibold">{PERSONAL_INFO.experience}</span> of
                 experience building exceptional web applications. I specialize in creating modern,
@@ -43,13 +43,13 @@ export function AboutIntro() {
 
               <p className="text-text-secondary leading-relaxed text-lg">
                 My expertise spans across React, Next.js, TypeScript, and modern web development
-                practices. I'm passionate about writing clean code, optimizing performance, and
+                practices. I&apos;m passionate about writing clean code, optimizing performance, and
                 ensuring accessibility standards are met in every project.
               </p>
 
               <p className="text-text-secondary leading-relaxed text-lg">
                 Currently <span className="text-accent-primary">{PERSONAL_INFO.location}</span>, I
-                work with clients worldwide to deliver high-quality frontend solutions. I'm always
+                work with clients worldwide to deliver high-quality frontend solutions. I&apos;m always
                 eager to take on new challenges and explore innovative technologies that push the
                 boundaries of web development.
               </p>
