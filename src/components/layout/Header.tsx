@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Globe } from 'lucide-react';
+import { Menu, X, Github, Linkedin, Instagram, Twitter } from 'lucide-react';
 import { ThemeToggle } from '@/components/shared/ThemeToggle';
 import { cn } from '@/lib/utils';
 
@@ -12,6 +12,13 @@ const navLinks = [
   { name: 'Home', href: '/' },
   { name: 'Projects', href: '/projects' },
   { name: 'Contact', href: '#contact' },
+];
+
+const socialLinks = [
+  { name: 'GitHub', url: 'https://github.com/ali7887', icon: Github },
+  { name: 'LinkedIn', url: 'https://www.linkedin.com/in/alikiani78/', icon: Linkedin },
+  { name: 'Instagram', url: 'https://www.instagram.com/alikiani.design', icon: Instagram },
+  { name: 'Twitter', url: 'https://x.com/alikiani78', icon: Twitter },
 ];
 
 /**
@@ -104,15 +111,23 @@ export function Header() {
           </div>
 
           {/* Right side actions */}
-          <div className="flex items-center gap-4">
-            {/* Language switcher placeholder */}
-            <button
-              type="button"
-              aria-label="Change language"
-              className="glass-card p-2 rounded-lg hover:bg-white/[0.06] transition-colors hidden sm:flex"
-            >
-              <Globe className="w-5 h-5 text-text-secondary" />
-            </button>
+          <div className="flex items-center gap-3">
+            {/* Social Icons */}
+            {socialLinks.map((link) => {
+              const Icon = link.icon;
+              return (
+                <a
+                  key={link.name}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={link.name}
+                  className="p-2 rounded-lg hover:bg-white/[0.08] transition-colors text-text-secondary hover:text-accent-primary hidden sm:flex"
+                >
+                  <Icon className="w-5 h-5" />
+                </a>
+              );
+            })}
 
             <ThemeToggle />
 
@@ -187,6 +202,28 @@ export function Header() {
                     </motion.div>
                   );
                 })}
+                
+                {/* Social Icons in Mobile Menu */}
+                <div className="flex items-center gap-3 pt-4 border-t border-white/[0.08]">
+                  {socialLinks.map((link) => {
+                    const Icon = link.icon;
+                    return (
+                      <motion.a
+                        key={link.name}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={link.name}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: navLinks.length * 0.1 }}
+                        className="p-2 rounded-lg hover:bg-white/[0.08] transition-colors text-text-secondary hover:text-accent-primary"
+                      >
+                        <Icon className="w-5 h-5" />
+                      </motion.a>
+                    );
+                  })}
+                </div>
               </nav>
             </motion.div>
           </>
