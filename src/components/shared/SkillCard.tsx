@@ -41,7 +41,7 @@ export function SkillCard({ skill, index = 0 }: SkillCardProps) {
         role="img"
         viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"
-        className="w-12 h-12"
+        className="w-16 h-16"
         fill="currentColor"
       >
         <title>{iconData.title}</title>
@@ -71,19 +71,26 @@ export function SkillCard({ skill, index = 0 }: SkillCardProps) {
     >
       {/* Icon */}
       <motion.div
-        className="flex items-center justify-center"
+        className="flex items-center justify-center p-4 rounded-xl bg-white/80 border-2 border-gray-200 shadow-sm"
         whileHover={{
-          scale: 1.1,
-          filter: 'drop-shadow(0 0 12px currentColor)',
+          scale: 1.15,
+          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)',
         }}
         transition={{ duration: 0.2 }}
         style={{
           color: iconData ? `#${iconData.hex}` : 'var(--accent-primary)',
         }}
       >
-        {iconSvg || (
-          <Code className="w-12 h-12 text-accent-primary" />
-        )}
+        <div
+          style={{
+            filter: iconData ? `brightness(1.2) saturate(1.3) contrast(1.1)` : 'none',
+            opacity: 1,
+          }}
+        >
+          {iconSvg || (
+            <Code className="w-16 h-16 text-accent-primary" />
+          )}
+        </div>
       </motion.div>
 
       {/* Skill name */}

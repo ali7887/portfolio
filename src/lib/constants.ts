@@ -115,22 +115,34 @@ export const SOCIAL_LINKS = [
 
 export const SKILLS: Skill[] = [
   {
-    name: 'Next.js',
-    level: 95,
-    category: 'frontend',
-    iconName: 'nextdotjs',
-  },
-  {
     name: 'React',
     level: 95,
     category: 'frontend',
     iconName: 'react',
   },
   {
+    name: 'Next.js',
+    level: 95,
+    category: 'frontend',
+    iconName: 'nextdotjs',
+  },
+  {
     name: 'TypeScript',
     level: 90,
     category: 'frontend',
     iconName: 'typescript',
+  },
+  {
+    name: 'Redux Toolkit',
+    level: 85,
+    category: 'frontend',
+    iconName: 'redux',
+  },
+  {
+    name: 'Zustand',
+    level: 85,
+    category: 'frontend',
+    iconName: 'react',
   },
   {
     name: 'Node.js',
@@ -143,6 +155,12 @@ export const SKILLS: Skill[] = [
     level: 85,
     category: 'backend',
     iconName: 'express',
+  },
+  {
+    name: 'Prisma',
+    level: 80,
+    category: 'backend',
+    iconName: 'prisma',
   },
   {
     name: 'JavaScript',
