@@ -2,7 +2,6 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Hero } from '@/components/sections/Hero';
 import { AboutIntro } from '@/components/sections/AboutIntro';
-import { Stats } from '@/components/sections/Stats';
 import { Skills } from '@/components/sections/Skills';
 import { Projects } from '@/components/sections/Projects';
 import { Experience } from '@/components/sections/Experience';
@@ -19,7 +18,6 @@ export default function HomePage() {
       <main className="min-h-screen">
         <Hero />
         <AboutIntro />
-        <Stats />
         <Skills />
         <Projects showFilters={false} limit={4} />
         <Experience />
