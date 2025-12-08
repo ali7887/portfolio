@@ -38,8 +38,8 @@ export function Header() {
       transition={{ duration: 0.5, ease: 'easeOut' }}
       className={cn(
         'fixed top-0 left-0 right-0 z-50',
-        'backdrop-blur-xl border-b',
-        'bg-white/60 border-white/30',
+        'backdrop-blur-2xl border-b',
+        'bg-white/30 border-white/20',
         'transition-all duration-300'
       )}
     >
@@ -123,12 +123,17 @@ export function Header() {
               onClick={() => setIsOpen(!isOpen)}
               aria-label="Toggle menu"
               aria-expanded={isOpen}
-              className="glass-card p-2 rounded-lg hover:bg-white/[0.06] transition-colors md:hidden"
+              className={cn(
+                'p-2 rounded-lg transition-colors md:hidden',
+                'backdrop-blur-xl bg-white/40 border border-white/30',
+                'hover:bg-white/50',
+                isOpen && 'bg-white/60 border-white/40'
+              )}
             >
               {isOpen ? (
-                <X className="w-5 h-5 text-text-primary" />
+                <X className="w-6 h-6 text-gray-900 font-bold" />
               ) : (
-                <Menu className="w-5 h-5 text-text-primary" />
+                <Menu className="w-6 h-6 text-gray-900" />
               )}
             </button>
           </div>
@@ -154,7 +159,7 @@ export function Header() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed top-16 right-0 bottom-0 w-64 glass-card border-l border-white/[0.08] z-50 md:hidden"
+              className="fixed top-16 right-0 bottom-0 w-64 backdrop-blur-2xl bg-white/40 border-l border-white/30 shadow-2xl z-50 md:hidden"
             >
               <nav className="flex flex-col p-6 gap-4">
                 {navLinks.map((link, index) => {
@@ -178,9 +183,11 @@ export function Header() {
                         }}
                         className={cn(
                           'block px-4 py-3 rounded-lg text-base font-medium transition-colors',
+                          'backdrop-blur-xl bg-white/50 border border-white/40',
+                          'text-gray-900 shadow-sm',
                           isActive
-                            ? 'bg-white/[0.08] text-accent-neon'
-                            : 'text-text-secondary hover:bg-white/[0.06] hover:text-text-primary'
+                            ? 'bg-accent-primary/20 text-accent-primary border-accent-primary/30 font-semibold'
+                            : 'hover:bg-white/60 hover:border-white/50'
                         )}
                       >
                         {link.name}
@@ -190,7 +197,7 @@ export function Header() {
                 })}
                 
                 {/* Social Icons in Mobile Menu */}
-                <div className="flex items-center gap-3 pt-4 border-t border-white/[0.08]">
+                <div className="flex items-center gap-3 pt-4 border-t border-white/30">
                   {socialLinks.map((link) => {
                     const Icon = link.icon;
                     return (
@@ -203,7 +210,7 @@ export function Header() {
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: navLinks.length * 0.1 }}
-                        className="p-2 rounded-lg hover:bg-white/[0.08] transition-colors text-text-secondary hover:text-accent-primary"
+                        className="p-3 rounded-lg backdrop-blur-xl bg-white/50 border border-white/40 text-gray-700 hover:bg-white/60 hover:border-white/50 hover:text-accent-primary transition-all shadow-sm"
                       >
                         <Icon className="w-5 h-5" />
                       </motion.a>
