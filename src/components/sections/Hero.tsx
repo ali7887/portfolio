@@ -61,7 +61,7 @@ export function Hero() {
             href="#contact"
             className="px-8 py-3 bg-accent-primary text-white rounded-lg font-semibold hover:bg-accent-secondary transition-colors"
           >
-            Hire Me
+            Contact Me
           </Link>
 
           <Link

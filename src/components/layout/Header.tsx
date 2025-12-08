@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -27,17 +27,7 @@ const socialLinks = [
  */
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const closeMenu = () => setIsOpen(false);
 
@@ -49,9 +39,7 @@ export function Header() {
       className={cn(
         'fixed top-0 left-0 right-0 z-50',
         'backdrop-blur-xl border-b',
-        scrolled
-          ? 'bg-white/[0.08] border-white/[0.12]'
-          : 'bg-white/[0.04] border-white/[0.08]',
+        'bg-white/60 border-white/30',
         'transition-all duration-300'
       )}
     >

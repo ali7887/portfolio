@@ -1,7 +1,6 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Download } from 'lucide-react';
 import { EXPERIENCES } from '@/lib/constants';
 import { fadeInUp, staggerContainer } from '@/lib/animations';
 import { cn } from '@/lib/utils';
@@ -133,30 +132,6 @@ export function Experience() {
           </div>
         </motion.div>
 
-        {/* Download Resume button */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="text-center mt-12"
-        >
-          <motion.a
-            href="/resume.pdf"
-            download
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.98 }}
-            className={cn(
-              'neomorph-button px-8 py-3 rounded-lg',
-              'inline-flex items-center gap-2',
-              'text-white font-semibold',
-              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary'
-            )}
-          >
-            <Download className="w-5 h-5" />
-            <span>Download Resume</span>
-          </motion.a>
-        </motion.div>
       </div>
     </section>
   );

@@ -1,5 +1,6 @@
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
+import { ScrollToTop } from '@/components/shared/ScrollToTop';
 import { Hero } from '@/components/sections/Hero';
 import { AboutIntro } from '@/components/sections/AboutIntro';
 import { Skills } from '@/components/sections/Skills';
@@ -24,6 +25,7 @@ export default function HomePage() {
         <Contact />
       </main>
       <Footer />
+      <ScrollToTop />
     </>
   );
 }

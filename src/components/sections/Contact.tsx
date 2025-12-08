@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { motion } from 'framer-motion';
-import { Mail, MapPin, Clock, Github, Linkedin, Twitter, Instagram, Send, Loader2 } from 'lucide-react';
+import { Send, Loader2 } from 'lucide-react';
 import { contactSchema, type ContactFormData } from '@/lib/schemas';
 import { fadeInUp, staggerContainer } from '@/lib/animations';
 import { cn } from '@/lib/utils';
@@ -65,33 +65,32 @@ export function Contact() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gradient-primary mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             Get in Touch
           </h2>
-          <p className="text-lg text-text-secondary max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Have a project in mind? Let&apos;s discuss how we can work together.
           </p>
         </motion.div>
 
-        {/* Two column layout */}
+        {/* Centered Contact Form */}
         <motion.div
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
-          className="grid md:grid-cols-2 gap-8 lg:gap-12"
+          className="flex justify-center"
         >
-          {/* Left: Contact Form */}
-          <motion.div variants={fadeInUp}>
-            <div className="glass-card p-6 md:p-8">
+          <motion.div variants={fadeInUp} className="w-full max-w-2xl">
+            <div className="bg-white rounded-xl border border-gray-200 p-6 md:p-8 shadow-sm">
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 {/* Name field */}
                 <div>
                   <label
                     htmlFor="name"
-                    className="block text-sm font-medium text-text-primary mb-2"
+                    className="block text-sm font-medium text-gray-900 mb-2"
                   >
-                    Name <span className="text-accent-neon">*</span>
+                    Name <span className="text-red-500">*</span>
                   </label>
                   <input
                     {...register('name')}
@@ -99,9 +98,8 @@ export function Contact() {
                     id="name"
                     className={cn(
                       'w-full px-4 py-3 rounded-lg',
-                      'glass-card border',
-                      'bg-white/[0.04] border-white/[0.08]',
-                      'text-text-primary placeholder-text-muted',
+                      'bg-white border border-gray-200',
+                      'text-gray-900 placeholder-gray-400',
                       'focus:outline-none focus:ring-2 focus:ring-accent-primary focus:border-accent-primary',
                       'transition-colors',
                       errors.name && 'border-red-500 focus:ring-red-500'
@@ -117,9 +115,9 @@ export function Contact() {
                 <div>
                   <label
                     htmlFor="email"
-                    className="block text-sm font-medium text-text-primary mb-2"
+                    className="block text-sm font-medium text-gray-900 mb-2"
                   >
-                    Email <span className="text-accent-neon">*</span>
+                    Email <span className="text-red-500">*</span>
                   </label>
                   <input
                     {...register('email')}
@@ -127,9 +125,8 @@ export function Contact() {
                     id="email"
                     className={cn(
                       'w-full px-4 py-3 rounded-lg',
-                      'glass-card border',
-                      'bg-white/[0.04] border-white/[0.08]',
-                      'text-text-primary placeholder-text-muted',
+                      'bg-white border border-gray-200',
+                      'text-gray-900 placeholder-gray-400',
                       'focus:outline-none focus:ring-2 focus:ring-accent-primary focus:border-accent-primary',
                       'transition-colors',
                       errors.email && 'border-red-500 focus:ring-red-500'
@@ -145,9 +142,9 @@ export function Contact() {
                 <div>
                   <label
                     htmlFor="subject"
-                    className="block text-sm font-medium text-text-primary mb-2"
+                    className="block text-sm font-medium text-gray-900 mb-2"
                   >
-                    Subject <span className="text-accent-neon">*</span>
+                    Subject <span className="text-red-500">*</span>
                   </label>
                   <input
                     {...register('subject')}
@@ -155,9 +152,8 @@ export function Contact() {
                     id="subject"
                     className={cn(
                       'w-full px-4 py-3 rounded-lg',
-                      'glass-card border',
-                      'bg-white/[0.04] border-white/[0.08]',
-                      'text-text-primary placeholder-text-muted',
+                      'bg-white border border-gray-200',
+                      'text-gray-900 placeholder-gray-400',
                       'focus:outline-none focus:ring-2 focus:ring-accent-primary focus:border-accent-primary',
                       'transition-colors',
                       errors.subject && 'border-red-500 focus:ring-red-500'
@@ -173,9 +169,9 @@ export function Contact() {
                 <div>
                   <label
                     htmlFor="message"
-                    className="block text-sm font-medium text-text-primary mb-2"
+                    className="block text-sm font-medium text-gray-900 mb-2"
                   >
-                    Message <span className="text-accent-neon">*</span>
+                    Message <span className="text-red-500">*</span>
                   </label>
                   <textarea
                     {...register('message')}
@@ -183,9 +179,8 @@ export function Contact() {
                     rows={6}
                     className={cn(
                       'w-full px-4 py-3 rounded-lg resize-none',
-                      'glass-card border',
-                      'bg-white/[0.04] border-white/[0.08]',
-                      'text-text-primary placeholder-text-muted',
+                      'bg-white border border-gray-200',
+                      'text-gray-900 placeholder-gray-400',
                       'focus:outline-none focus:ring-2 focus:ring-accent-primary focus:border-accent-primary',
                       'transition-colors',
                       errors.message && 'border-red-500 focus:ring-red-500'
@@ -215,11 +210,12 @@ export function Contact() {
                   whileHover={{ scale: isValid && !isSubmitting ? 1.02 : 1 }}
                   whileTap={{ scale: isValid && !isSubmitting ? 0.98 : 1 }}
                   className={cn(
-                    'w-full neomorph-button px-6 py-3 rounded-lg',
+                    'w-full px-6 py-3 rounded-lg',
                     'flex items-center justify-center gap-2',
-                    'text-white font-semibold',
+                    'bg-accent-primary text-white font-semibold',
+                    'hover:bg-accent-secondary',
                     'disabled:opacity-50 disabled:cursor-not-allowed',
-                    'transition-opacity',
+                    'transition-colors',
                     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary'
                   )}
                 >
@@ -236,115 +232,6 @@ export function Contact() {
                   )}
                 </motion.button>
               </form>
-            </div>
-          </motion.div>
-
-          {/* Right: Contact Info */}
-          <motion.div variants={fadeInUp} className="space-y-6">
-            {/* Email card */}
-            <div className="glass-card p-6">
-              <div className="flex items-start gap-4">
-                <div className="glass-card p-3 rounded-lg bg-accent-primary/10 border-accent-primary/30">
-                  <Mail className="w-6 h-6 text-accent-neon" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-text-primary mb-1">Email</h3>
-                  <a
-                    href="mailto:alikiani78@gmail.com"
-                    className="text-accent-primary hover:text-accent-neon transition-colors"
-                  >
-                    alikiani78@gmail.com
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            {/* Location card */}
-            <div className="glass-card p-6">
-              <div className="flex items-start gap-4">
-                <div className="glass-card p-3 rounded-lg bg-accent-primary/10 border-accent-primary/30">
-                  <MapPin className="w-6 h-6 text-accent-neon" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-text-primary mb-1">Location</h3>
-                  <p className="text-text-secondary">Available Worldwide (Remote)</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Response time card */}
-            <div className="glass-card p-6">
-              <div className="flex items-start gap-4">
-                <div className="glass-card p-3 rounded-lg bg-accent-primary/10 border-accent-primary/30">
-                  <Clock className="w-6 h-6 text-accent-neon" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-text-primary mb-1">
-                    Response Time
-                  </h3>
-                  <p className="text-text-secondary">Within 24 hours</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Social links */}
-            <div className="glass-card p-6">
-              <h3 className="text-lg font-semibold text-text-primary mb-4">Connect</h3>
-              <div className="flex gap-4">
-                <motion.a
-                  href="https://github.com/ali7887"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.1, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="glass-card p-3 rounded-lg hover:bg-white/[0.08] hover:border-accent-neon/50 transition-all text-text-secondary hover:text-accent-neon"
-                  aria-label="GitHub"
-                >
-                  <Github className="w-5 h-5" />
-                </motion.a>
-                <motion.a
-                  href="https://www.linkedin.com/in/alikiani78/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.1, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="glass-card p-3 rounded-lg hover:bg-white/[0.08] hover:border-accent-neon/50 transition-all text-text-secondary hover:text-accent-neon"
-                  aria-label="LinkedIn"
-                >
-                  <Linkedin className="w-5 h-5" />
-                </motion.a>
-                <motion.a
-                  href="https://x.com/alikiani78"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.1, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="glass-card p-3 rounded-lg hover:bg-white/[0.08] hover:border-accent-neon/50 transition-all text-text-secondary hover:text-accent-neon"
-                  aria-label="Twitter"
-                >
-                  <Twitter className="w-5 h-5" />
-                </motion.a>
-                <motion.a
-                  href="https://www.instagram.com/alikiani.design"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.1, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="glass-card p-3 rounded-lg hover:bg-white/[0.08] hover:border-accent-neon/50 transition-all text-text-secondary hover:text-accent-neon"
-                  aria-label="Instagram"
-                >
-                  <Instagram className="w-5 h-5" />
-                </motion.a>
-                <motion.a
-                  href="mailto:alikiani78@gmail.com"
-                  whileHover={{ scale: 1.1, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="glass-card p-3 rounded-lg hover:bg-white/[0.08] hover:border-accent-neon/50 transition-all text-text-secondary hover:text-accent-neon"
-                  aria-label="Email"
-                >
-                  <Mail className="w-5 h-5" />
-                </motion.a>
-              </div>
             </div>
           </motion.div>
         </motion.div>
