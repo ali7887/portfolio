@@ -10,7 +10,7 @@ export const PERSONAL_INFO: PersonalInfo = {
   role: 'Senior Frontend Developer',
   experience: '10+ years',
   location: 'Available Worldwide (Remote)',
-  email: 'ali@alikiani.co',
+  email: 'alikiani78@gmail.com',
 
   specialties: [
     'React & Next.js Architecture',
@@ -88,22 +88,27 @@ export const PROJECTS: Project[] = [
 export const SOCIAL_LINKS = [
   {
     name: 'GitHub',
-    url: 'https://github.com/alikiani',
+    url: 'https://github.com/ali7887',
     icon: 'github',
   },
   {
     name: 'LinkedIn',
-    url: 'https://linkedin.com/in/alikiani',
+    url: 'https://www.linkedin.com/in/alikiani78/',
     icon: 'linkedin',
   },
   {
+    name: 'Instagram',
+    url: 'https://www.instagram.com/alikiani.design',
+    icon: 'instagram',
+  },
+  {
     name: 'Twitter',
-    url: 'https://twitter.com/alikiani',
+    url: 'https://x.com/alikiani78',
     icon: 'twitter',
   },
   {
     name: 'Email',
-    url: 'mailto:ali@alikiani.co',
+    url: 'mailto:alikiani78@gmail.com',
     icon: 'mail',
   },
 ] as const;

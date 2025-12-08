@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { motion } from 'framer-motion';
-import { Mail, MapPin, Clock, Github, Linkedin, Twitter, Send, Loader2 } from 'lucide-react';
+import { Mail, MapPin, Clock, Github, Linkedin, Twitter, Instagram, Send, Loader2 } from 'lucide-react';
 import { contactSchema, type ContactFormData } from '@/lib/schemas';
 import { fadeInUp, staggerContainer } from '@/lib/animations';
 import { cn } from '@/lib/utils';
@@ -250,10 +250,10 @@ export function Contact() {
                 <div>
                   <h3 className="text-lg font-semibold text-text-primary mb-1">Email</h3>
                   <a
-                    href="mailto:ali@alikiani.co"
+                    href="mailto:alikiani78@gmail.com"
                     className="text-accent-primary hover:text-accent-neon transition-colors"
                   >
-                    ali@alikiani.co
+                    alikiani78@gmail.com
                   </a>
                 </div>
               </div>
@@ -292,7 +292,7 @@ export function Contact() {
               <h3 className="text-lg font-semibold text-text-primary mb-4">Connect</h3>
               <div className="flex gap-4">
                 <motion.a
-                  href="https://github.com/alikiani"
+                  href="https://github.com/ali7887"
                   target="_blank"
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.1, y: -2 }}
@@ -303,7 +303,7 @@ export function Contact() {
                   <Github className="w-5 h-5" />
                 </motion.a>
                 <motion.a
-                  href="https://linkedin.com/in/alikiani"
+                  href="https://www.linkedin.com/in/alikiani78/"
                   target="_blank"
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.1, y: -2 }}
@@ -314,7 +314,7 @@ export function Contact() {
                   <Linkedin className="w-5 h-5" />
                 </motion.a>
                 <motion.a
-                  href="https://twitter.com/alikiani"
+                  href="https://x.com/alikiani78"
                   target="_blank"
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.1, y: -2 }}
@@ -325,7 +325,18 @@ export function Contact() {
                   <Twitter className="w-5 h-5" />
                 </motion.a>
                 <motion.a
-                  href="mailto:ali@alikiani.co"
+                  href="https://www.instagram.com/alikiani.design"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.1, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="glass-card p-3 rounded-lg hover:bg-white/[0.08] hover:border-accent-neon/50 transition-all text-text-secondary hover:text-accent-neon"
+                  aria-label="Instagram"
+                >
+                  <Instagram className="w-5 h-5" />
+                </motion.a>
+                <motion.a
+                  href="mailto:alikiani78@gmail.com"
                   whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                   className="glass-card p-3 rounded-lg hover:bg-white/[0.08] hover:border-accent-neon/50 transition-all text-text-secondary hover:text-accent-neon"

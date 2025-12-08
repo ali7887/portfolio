@@ -2,28 +2,33 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Mail, Twitter } from 'lucide-react';
+import { Github, Linkedin, Mail, Twitter, Instagram } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const socialLinks = [
   {
     name: 'GitHub',
-    url: 'https://github.com/alikiani',
+    url: 'https://github.com/ali7887',
     icon: Github,
   },
   {
     name: 'LinkedIn',
-    url: 'https://linkedin.com/in/alikiani',
+    url: 'https://www.linkedin.com/in/alikiani78/',
     icon: Linkedin,
   },
   {
     name: 'Twitter',
-    url: 'https://twitter.com/alikiani',
+    url: 'https://x.com/alikiani78',
     icon: Twitter,
   },
   {
+    name: 'Instagram',
+    url: 'https://www.instagram.com/alikiani.design',
+    icon: Instagram,
+  },
+  {
     name: 'Email',
-    url: 'mailto:ali@alikiani.co',
+    url: 'mailto:alikiani78@gmail.com',
     icon: Mail,
   },
 ];

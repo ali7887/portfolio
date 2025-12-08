@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Github, Linkedin, Instagram, Twitter } from 'lucide-react';
+import { Menu, X, Github, Linkedin, Instagram, Twitter, Mail } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const navLinks = [
@@ -18,6 +18,7 @@ const socialLinks = [
   { name: 'LinkedIn', url: 'https://www.linkedin.com/in/alikiani78/', icon: Linkedin },
   { name: 'Instagram', url: 'https://www.instagram.com/alikiani.design', icon: Instagram },
   { name: 'Twitter', url: 'https://x.com/alikiani78', icon: Twitter },
+  { name: 'Email', url: 'mailto:alikiani78@gmail.com', icon: Mail },
 ];
 
 /**
