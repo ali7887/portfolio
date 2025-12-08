@@ -4,34 +4,7 @@
 
 @layer base {
   :root {
-    /* Dark mode (default) */
-    --bg-primary: #0B1120;
-    --bg-secondary: #111827;
-    --bg-card: #1F2937;
-    
-    /* Glass & Surfaces */
-    --glass-bg: rgba(255, 255, 255, 0.04);
-    --glass-border: rgba(255, 255, 255, 0.08);
-    --glass-hover: rgba(255, 255, 255, 0.06);
-    
-    /* Accent Colors */
-    --accent-primary: #38BDF8;
-    --accent-secondary: #0EA5E9;
-    --accent-neon: #00e5ff;
-    
-    /* Text Colors */
-    --text-primary: #E2E8F0;
-    --text-secondary: #94A3B8;
-    --text-muted: #6b7280;
-    
-    /* Shadows */
-    --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.4);
-    --shadow-neon: 0 0 20px rgba(0, 229, 255, 0.3);
-    --shadow-soft: 0 4px 16px rgba(0, 0, 0, 0.2);
-  }
-
-  .light {
-    /* Light mode - Professional & Readable */
+    /* Light mode colors only */
     --bg-primary: #F8FAFC;
     --bg-secondary: #FFFFFF;
     --bg-card: #FFFFFF;
@@ -41,94 +14,29 @@
     --glass-border: rgba(15, 23, 42, 0.08);
     --glass-hover: rgba(15, 23, 42, 0.05);
     
-    /* Accent Colors - Darker for visibility */
+    /* Accent Colors */
     --accent-primary: #0284C7;
     --accent-secondary: #0369A1;
     --accent-neon: #0284C7;
     
-    /* Text Colors - Professional dark gray */
+    /* Text Colors */
     --text-primary: #334155;
     --text-secondary: #64748B;
     --text-muted: #64748b;
     
-    /* Shadows - Softer for light mode */
+    /* Shadows */
     --shadow-glass: 0 4px 20px rgba(0, 0, 0, 0.05);
     --shadow-neon: 0 0 20px rgba(2, 132, 199, 0.2);
     --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.08);
     --border: #E2E8F0;
   }
 
-  .dark {
-    /* Dark mode colors */
-    --bg-primary: #0B1120;
-    --bg-secondary: #111827;
-    --bg-card: #1F2937;
-    
-    /* Glass & Surfaces */
-    --glass-bg: rgba(255, 255, 255, 0.04);
-    --glass-border: rgba(255, 255, 255, 0.08);
-    --glass-hover: rgba(255, 255, 255, 0.06);
-    
-    /* Accent Colors */
-    --accent-primary: #38BDF8;
-    --accent-secondary: #0EA5E9;
-    --accent-neon: #00e5ff;
-    
-    /* Text Colors */
-    --text-primary: #E2E8F0;
-    --text-secondary: #94A3B8;
-    --text-muted: #6b7280;
-    
-    /* Shadows */
-    --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.4);
-    --shadow-neon: 0 0 20px rgba(0, 229, 255, 0.3);
-    --shadow-soft: 0 4px 16px rgba(0, 0, 0, 0.2);
-  }
-
-  /* Force readable text in light mode for all text elements */
-  .light h1,
-  .light h2,
-  .light h3,
-  .light h4,
-  .light h5,
-  .light h6 {
-    color: #334155 !important;
-  }
-
-  .light p,
-  .light span {
-    color: #475569 !important;
-  }
-
-  .light a {
-    color: #334155 !important;
-  }
-
-  .light .text-text-primary {
-    color: #334155 !important;
-  }
-
-  .light .text-text-secondary {
-    color: #64748B !important;
-  }
-
-  .light .text-text-muted {
-    color: #64748b !important;
-  }
-
   body {
-    @apply bg-bg-primary text-text-primary antialiased;
-    font-family: var(--font-geist-sans, system-ui, -apple-system, sans-serif);
-    min-height: 100vh;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-
-  body:not(.dark) {
     background: #F8FAFC;
-  }
-
-  body.dark {
-    background: linear-gradient(135deg, #0B1120 0%, #111827 100%);
+    color: #334155;
+    font-family: var(--font-inter, system-ui, -apple-system, sans-serif);
+    min-height: 100vh;
+    antialiased: true;
   }
 
   html {
@@ -142,116 +50,113 @@
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-bg-secondary;
+    background: #FFFFFF;
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-glass-border rounded-full;
+    background: rgba(15, 23, 42, 0.08);
+    border-radius: 9999px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-glass-hover;
+    background: rgba(15, 23, 42, 0.12);
   }
 
   /* Focus ring for accessibility */
   *:focus-visible {
-    @apply outline-none ring-2 ring-accent-primary ring-offset-2 ring-offset-bg-primary;
+    outline: none;
+    ring: 2px;
+    ring-color: #0284C7;
+    ring-offset: 2px;
+    ring-offset-color: #F8FAFC;
   }
 }
 
 @layer components {
-  /* Glass card utility */
+  /* Glass card utility - Light mode only */
   .glass-card {
-    @apply backdrop-blur-xl bg-white/[0.04] border border-white/[0.08] rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.4)] transition-all duration-300;
+    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(15, 23, 42, 0.1);
+    border-radius: 1rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s;
   }
 
   .glass-card-hover {
-    @apply glass-card hover:bg-white/[0.06] hover:border-white/[0.12];
+    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(15, 23, 42, 0.1);
+    border-radius: 1rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s;
+  }
+
+  .glass-card-hover:hover {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(15, 23, 42, 0.15);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
   }
 
   /* Glass card with neon accent */
   .glass-card-neon {
-    @apply glass-card shadow-[0_8px_32px_rgba(0,0,0,0.4),0_0_20px_rgba(0,229,255,0.1)];
+    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(15, 23, 42, 0.1);
+    border-radius: 1rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05), 0 0 20px rgba(2, 132, 199, 0.1);
+    transition: all 0.3s;
   }
 
   .glass-card-neon-hover {
-    @apply glass-card-neon hover:shadow-[0_8px_32px_rgba(0,0,0,0.4),0_0_30px_rgba(0,229,255,0.2)];
-  }
-
-  /* Light mode glass cards - Professional white cards */
-  .light .glass-card,
-  .light .glass-card-hover,
-  .light .glass-card-neon,
-  .light .glass-card-neon-hover {
-    background: rgba(255, 255, 255, 0.9) !important;
-    border-color: rgba(15, 23, 42, 0.1) !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
     backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(15, 23, 42, 0.1);
+    border-radius: 1rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05), 0 0 20px rgba(2, 132, 199, 0.1);
+    transition: all 0.3s;
   }
 
-  .light .glass-card-hover:hover,
-  .light .glass-card-neon-hover:hover {
-    background: rgba(255, 255, 255, 0.95) !important;
-    border-color: rgba(15, 23, 42, 0.15) !important;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08) !important;
+  .glass-card-neon-hover:hover {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(15, 23, 42, 0.15);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08), 0 0 30px rgba(2, 132, 199, 0.2);
   }
 
-  /* Neumorphic button */
+  /* Professional gradient button */
   .neomorph-button {
-    @apply bg-gradient-to-br from-gray-800/50 to-gray-900/50 
-           shadow-[inset_2px_2px_5px_rgba(255,255,255,0.05),inset_-2px_-2px_5px_rgba(0,0,0,0.5)] 
-           active:shadow-[inset_1px_1px_3px_rgba(255,255,255,0.08),inset_-1px_-1px_3px_rgba(0,0,0,0.6)] 
-           transition-all duration-200 
-           text-white font-semibold;
+    background: linear-gradient(135deg, #0284C7, #0369A1);
+    color: white;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+    border: none;
+    transition: all 0.2s;
   }
 
   .neomorph-button:hover {
-    @apply scale-[1.02];
+    box-shadow: 0 6px 20px rgba(2, 132, 199, 0.4);
+    background: linear-gradient(135deg, #0ea5e9, #0284C7);
+    transform: scale(1.02);
   }
 
   .neomorph-button:active {
-    @apply scale-[0.98];
-  }
-
-  /* Light mode buttons - Professional gradient buttons */
-  .light .neomorph-button {
-    background: linear-gradient(135deg, #0891b2, #7c3aed) !important;
-    color: white !important;
-    box-shadow: 0 4px 12px rgba(8, 145, 178, 0.3) !important;
-    border: none !important;
-  }
-
-  .light .neomorph-button:hover {
-    box-shadow: 0 6px 20px rgba(8, 145, 178, 0.4) !important;
-    background: linear-gradient(135deg, #0ea5e9, #8b5cf6) !important;
-  }
-
-  .light .neomorph-button:active {
-    box-shadow: 0 2px 8px rgba(8, 145, 178, 0.3) !important;
+    box-shadow: 0 2px 8px rgba(2, 132, 199, 0.3);
+    transform: scale(0.98);
   }
 
   /* Text gradient utilities */
   .text-gradient-primary {
-    @apply bg-gradient-to-r from-accent-primary to-accent-neon bg-clip-text text-transparent;
+    background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   .text-gradient-secondary {
-    @apply bg-gradient-to-r from-accent-secondary to-accent-primary bg-clip-text text-transparent;
-  }
-
-  /* Light mode gradient text */
-  .light .text-gradient-primary {
-    background: linear-gradient(135deg, #0891b2 0%, #7c3aed 100%) !important;
-    -webkit-background-clip: text !important;
-    background-clip: text !important;
-    -webkit-text-fill-color: transparent !important;
-  }
-
-  .light .text-gradient-secondary {
-    background: linear-gradient(135deg, #7c3aed 0%, #0891b2 100%) !important;
-    -webkit-background-clip: text !important;
-    background-clip: text !important;
-    -webkit-text-fill-color: transparent !important;
+    background: linear-gradient(135deg, #0369A1 0%, #0284C7 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 }
 
@@ -272,20 +177,6 @@
 
   .safe-bottom {
     padding-bottom: env(safe-area-inset-bottom);
-  }
-
-  /* Light mode readable text utilities */
-  .light-text-primary {
-    @apply text-[#0f172a];
-  }
-
-  .light-text-secondary {
-    @apply text-[#475569];
-  }
-
-  /* Light mode cards */
-  .light-card {
-    @apply bg-white border border-gray-200 shadow-md;
   }
 }
 
@@ -312,62 +203,47 @@
   }
 }
 
-/* Light Mode Professional Fixes */
-.light {
-  background: #F8FAFC;
-}
-
 /* Light Mode Header */
-.light header {
+header {
   background: rgba(255, 255, 255, 0.95) !important;
   backdrop-filter: blur(10px);
   border-bottom: 1px solid #E2E8F0 !important;
 }
 
-.light nav a {
+nav a {
   color: #334155 !important;
   font-weight: 500;
 }
 
-.light nav a:hover {
+nav a:hover {
   color: #0284C7 !important;
 }
 
-/* Light Mode Buttons */
-.light button {
+/* Buttons */
+button {
   color: #334155 !important;
 }
 
-.light .neomorph-button,
-.light button[type="submit"] {
+button[type="submit"] {
   background: #0284C7 !important;
   color: white !important;
 }
 
-/* Light Mode Cards */
-.light .glass-card,
-.light .glass-card-hover,
-.light .glass-card-neon {
+/* Cards */
+.glass-card,
+.glass-card-hover,
+.glass-card-neon {
   background: white !important;
   border: 1px solid #E2E8F0 !important;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05) !important;
 }
 
-.light .glass-card:hover {
+.glass-card:hover {
   box-shadow: 0 8px 12px rgba(0, 0, 0, 0.08) !important;
 }
 
-/* Light Mode Text Gradient */
-.light .text-gradient-primary {
-  background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* Light Mode Footer */
-.light footer {
+/* Footer */
+footer {
   background: white !important;
   border-top: 1px solid #E2E8F0 !important;
 }
-

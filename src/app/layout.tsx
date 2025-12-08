@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import { ThemeScript } from '@/components/shared/ThemeScript';
 import './globals.css';
 
 const inter = Inter({
@@ -87,9 +86,8 @@ interface RootLayoutProps {
  */
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" dir="ltr" suppressHydrationWarning>
+    <html lang="en" className="light">
       <head>
-        <ThemeScript />
         {/* Preconnect to external domains */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
@@ -101,8 +99,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         {/* Theme color */}
-        <meta name="theme-color" content="#060810" />
-        <meta name="color-scheme" content="dark" />
+        <meta name="theme-color" content="#F8FAFC" />
+        <meta name="color-scheme" content="light" />
       </head>
       <body className={`${inter.variable} font-sans antialiased`}>
         {children}

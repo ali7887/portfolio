@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Github, Linkedin, Instagram, Twitter } from 'lucide-react';
-import { ThemeToggle } from '@/components/shared/ThemeToggle';
 import { cn } from '@/lib/utils';
 
 const navLinks = [
@@ -127,9 +126,7 @@ export function Header() {
                   <Icon className="w-5 h-5" />
                 </a>
               );
-            })}
-
-            <ThemeToggle />
+            }            )}
 
             {/* Mobile menu button */}
             <button

@@ -10,41 +10,28 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Dark mode colors (updated)
-        'bg-primary': '#0B1120',
-        'bg-secondary': '#111827',
-        'bg-card': '#1F2937',
+        // Light mode colors only
+        'bg-primary': '#F8FAFC',
+        'bg-secondary': '#FFFFFF',
+        'bg-card': '#FFFFFF',
         // Glass & surfaces
-        'glass-bg': 'rgba(255, 255, 255, 0.04)',
-        'glass-border': 'rgba(255, 255, 255, 0.08)',
-        'glass-hover': 'rgba(255, 255, 255, 0.06)',
+        'glass-bg': 'rgba(15, 23, 42, 0.03)',
+        'glass-border': 'rgba(15, 23, 42, 0.08)',
+        'glass-hover': 'rgba(15, 23, 42, 0.05)',
         // Accent colors
-        'accent-primary': '#38BDF8',
-        'accent-secondary': '#0EA5E9',
-        'accent-neon': '#00e5ff',
+        'accent-primary': '#0284C7',
+        'accent-secondary': '#0369A1',
+        'accent-neon': '#0284C7',
         // Text colors
-        'text-primary': '#E2E8F0',
-        'text-secondary': '#94A3B8',
-        'text-muted': '#6b7280',
-        // Light mode colors
-        light: {
-          'bg-primary': '#F8FAFC',
-          'bg-secondary': '#FFFFFF',
-          'bg-card': '#FFFFFF',
-          'accent-primary': '#0284C7',
-          'accent-secondary': '#0369A1',
-          'text-primary': '#334155',
-          'text-secondary': '#64748B',
-          'border': '#E2E8F0',
-        },
+        'text-primary': '#334155',
+        'text-secondary': '#64748B',
+        'text-muted': '#64748b',
+        'border': '#E2E8F0',
       },
       backgroundImage: {
-        'gradient-primary': 'linear-gradient(135deg, #060810 0%, #0b1220 100%)',
-        'gradient-accent': 'linear-gradient(135deg, #06b6d4 0%, #00e5ff 100%)',
-        'gradient-purple': 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)',
-        // Light mode gradients
-        'gradient-primary-light': 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
-        'gradient-accent-light': 'linear-gradient(135deg, #0891b2 0%, #7c3aed 100%)',
+        'gradient-primary': 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
+        'gradient-accent': 'linear-gradient(135deg, #0284C7 0%, #0369A1 100%)',
+        'gradient-purple': 'linear-gradient(135deg, #0284C7 0%, #0369A1 100%)',
       },
       boxShadow: {
         glass: '0 8px 32px rgba(0, 0, 0, 0.4)',
