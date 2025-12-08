@@ -114,17 +114,18 @@ export const SOCIAL_LINKS = [
 ] as const;
 
 export const SKILLS: Skill[] = [
-  {
-    name: 'React',
-    level: 95,
-    category: 'frontend',
-    iconName: 'react',
-  },
+  // First row
   {
     name: 'Next.js',
     level: 95,
     category: 'frontend',
     iconName: 'nextdotjs',
+  },
+  {
+    name: 'React',
+    level: 95,
+    category: 'frontend',
+    iconName: 'react',
   },
   {
     name: 'TypeScript',
@@ -133,17 +134,12 @@ export const SKILLS: Skill[] = [
     iconName: 'typescript',
   },
   {
-    name: 'Redux Toolkit',
-    level: 85,
+    name: 'JavaScript',
+    level: 95,
     category: 'frontend',
-    iconName: 'redux',
+    iconName: 'javascript',
   },
-  {
-    name: 'Zustand',
-    level: 85,
-    category: 'frontend',
-    iconName: 'react',
-  },
+  // Second row
   {
     name: 'Node.js',
     level: 85,
@@ -157,16 +153,10 @@ export const SKILLS: Skill[] = [
     iconName: 'express',
   },
   {
-    name: 'Prisma',
-    level: 80,
-    category: 'backend',
-    iconName: 'prisma',
-  },
-  {
-    name: 'JavaScript',
-    level: 95,
+    name: 'Redux Toolkit',
+    level: 85,
     category: 'frontend',
-    iconName: 'javascript',
+    iconName: 'redux',
   },
   {
     name: 'Tailwind CSS',
@@ -174,6 +164,7 @@ export const SKILLS: Skill[] = [
     category: 'tool',
     iconName: 'tailwindcss',
   },
+  // Third row
   {
     name: 'MongoDB',
     level: 80,
@@ -185,6 +176,18 @@ export const SKILLS: Skill[] = [
     level: 80,
     category: 'tool',
     iconName: 'postgresql',
+  },
+  {
+    name: 'Prisma',
+    level: 80,
+    category: 'backend',
+    iconName: 'prisma',
+  },
+  {
+    name: 'Elementor',
+    level: 85,
+    category: 'tool',
+    iconName: 'elementor',
   },
 ];
 

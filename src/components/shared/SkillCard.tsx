@@ -71,7 +71,7 @@ export function SkillCard({ skill, index = 0 }: SkillCardProps) {
     >
       {/* Icon */}
       <motion.div
-        className="flex items-center justify-center p-4 rounded-xl bg-white/80 border-2 border-gray-200 shadow-sm"
+        className="flex items-center justify-center p-4 rounded-xl border-2 shadow-sm"
         whileHover={{
           scale: 1.15,
           boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)',
@@ -79,12 +79,14 @@ export function SkillCard({ skill, index = 0 }: SkillCardProps) {
         transition={{ duration: 0.2 }}
         style={{
           color: iconData ? `#${iconData.hex}` : 'var(--accent-primary)',
+          backgroundColor: iconData ? `${iconData.hex}15` : 'rgba(2, 132, 199, 0.1)',
+          borderColor: iconData ? `${iconData.hex}40` : 'rgba(2, 132, 199, 0.3)',
         }}
       >
         <div
           style={{
-            filter: iconData ? `brightness(1.2) saturate(1.3) contrast(1.1)` : 'none',
-            opacity: 1,
+            filter: iconData ? `brightness(1.3) saturate(1.5) contrast(1.2)` : 'none',
+            opacity: 0.9,
           }}
         >
           {iconSvg || (
