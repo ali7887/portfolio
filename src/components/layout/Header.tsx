@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -22,135 +22,157 @@ const socialLinks = [
 ];
 
 /**
- * Header - Main navigation component
- * Features glass backdrop, mobile menu, and theme toggle
+ * Header - Main navigation component with scroll effects and improved mobile menu
  */
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
+
+  // Scroll detection
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Prevent body scroll when menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [isOpen]);
 
   const closeMenu = () => setIsOpen(false);
 
   return (
-    <motion.header
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5, ease: 'easeOut' }}
-      className={cn(
-        'fixed top-0 left-0 right-0 z-50',
-        'backdrop-blur-2xl border-b',
-        'bg-white/30 border-white/20',
-        'transition-all duration-300'
-      )}
-    >
-      <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
-          <Link
-            href="/"
-            className="text-xl md:text-2xl font-bold text-gradient-primary hover:opacity-80 transition-opacity"
-            aria-label="Ali Kiani - Home"
+    <>
+      <motion.header
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.5, ease: 'easeOut' }}
+        className={cn(
+          'fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300',
+          isScrolled
+            ? 'py-3 bg-white/80 backdrop-blur-lg shadow-sm border-gray-200/50'
+            : 'py-6 bg-white/30 backdrop-blur-2xl border-white/20'
+        )}
+      >
+        <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div
+            className={cn(
+              'flex items-center justify-between transition-all duration-300',
+              isScrolled ? 'h-12' : 'h-16 md:h-20'
+            )}
           >
-            Ali Kiani
-          </Link>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => {
-              const isActive = pathname === link.href || (link.href.startsWith('#') && pathname === '/');
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={(e) => {
-                    if (link.href.startsWith('#')) {
-                      e.preventDefault();
-                      const element = document.querySelector(link.href);
-                      if (element) {
-                        const headerOffset = 80;
-                        const elementPosition = element.getBoundingClientRect().top;
-                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                        window.scrollTo({
-                          top: offsetPosition,
-                          behavior: 'smooth',
-                        });
-                      }
-                    }
-                  }}
-                  className={cn(
-                    'relative text-sm font-medium transition-colors',
-                    isActive
-                      ? 'text-accent-neon'
-                      : 'text-text-secondary hover:text-text-primary'
-                  )}
-                >
-                  {link.name}
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeIndicator"
-                      className="absolute -bottom-1 left-0 right-0 h-0.5 bg-accent-neon"
-                      initial={false}
-                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                    />
-                  )}
-                </Link>
-              );
-            })}
-          </div>
-
-          {/* Right side actions */}
-          <div className="flex items-center gap-3">
-            {/* Social Icons */}
-            {socialLinks.map((link) => {
-              const Icon = link.icon;
-              return (
-                <a
-                  key={link.name}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={link.name}
-                  className="p-2 rounded-lg hover:bg-white/[0.08] transition-colors text-text-secondary hover:text-accent-primary hidden sm:flex"
-                >
-                  <Icon className="w-5 h-5" />
-                </a>
-              );
-            }            )}
-
-            {/* Mobile menu button */}
-            <button
-              type="button"
-              onClick={() => setIsOpen(!isOpen)}
-              aria-label="Toggle menu"
-              aria-expanded={isOpen}
+            {/* Logo */}
+            <Link
+              href="/"
               className={cn(
-                'p-2 rounded-lg transition-colors md:hidden',
-                'backdrop-blur-xl bg-white/40 border border-white/30',
-                'hover:bg-white/50',
-                isOpen && 'bg-white/60 border-white/40'
+                'font-bold text-gradient-primary hover:opacity-80 transition-all',
+                isScrolled ? 'text-xl' : 'text-xl md:text-2xl'
               )}
+              aria-label="Ali Kiani - Home"
             >
-              {isOpen ? (
-                <X className="w-6 h-6 text-gray-900 font-bold" />
-              ) : (
+              Ali Kiani
+            </Link>
+
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center gap-8">
+              {navLinks.map((link) => {
+                const isActive =
+                  pathname === link.href || (link.href.startsWith('#') && pathname === '/');
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={(e) => {
+                      if (link.href.startsWith('#')) {
+                        e.preventDefault();
+                        const element = document.querySelector(link.href);
+                        if (element) {
+                          const headerOffset = isScrolled ? 60 : 80;
+                          const elementPosition = element.getBoundingClientRect().top;
+                          const offsetPosition =
+                            elementPosition + window.pageYOffset - headerOffset;
+                          window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth',
+                          });
+                        }
+                      }
+                    }}
+                    className={cn(
+                      'relative text-sm font-medium transition-colors',
+                      isActive
+                        ? 'text-accent-primary'
+                        : 'text-gray-700 hover:text-accent-primary'
+                    )}
+                  >
+                    {link.name}
+                    {isActive && (
+                      <motion.div
+                        layoutId="activeIndicator"
+                        className="absolute -bottom-1 left-0 right-0 h-0.5 bg-accent-primary"
+                        initial={false}
+                        transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                      />
+                    )}
+                  </Link>
+                );
+              })}
+            </div>
+
+            {/* Right side actions */}
+            <div className="flex items-center gap-3">
+              {/* Social Icons */}
+              {socialLinks.map((link) => {
+                const Icon = link.icon;
+                return (
+                  <a
+                    key={link.name}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={link.name}
+                    className="p-2 rounded-lg hover:bg-gray-100 transition-colors text-gray-700 hover:text-accent-primary hidden sm:flex"
+                  >
+                    <Icon className="w-5 h-5" />
+                  </a>
+                );
+              })}
+
+              {/* Mobile menu button */}
+              <button
+                type="button"
+                onClick={() => setIsOpen(!isOpen)}
+                aria-label="Toggle menu"
+                aria-expanded={isOpen}
+                className="p-2 rounded-lg hover:bg-gray-100 transition-colors md:hidden"
+              >
                 <Menu className="w-6 h-6 text-gray-900" />
-              )}
-            </button>
+              </button>
+            </div>
           </div>
-        </div>
-      </nav>
+        </nav>
+      </motion.header>
 
       {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
           <>
-            {/* Backdrop */}
+            {/* Dark backdrop overlay */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={closeMenu}
-              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 md:hidden"
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden"
             />
 
             {/* Menu drawer */}
@@ -159,70 +181,86 @@ export function Header() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed top-16 right-0 bottom-0 w-64 backdrop-blur-2xl bg-white/40 border-l border-white/30 shadow-2xl z-50 md:hidden"
+              className="fixed top-0 right-0 bottom-0 w-3/4 max-w-sm bg-white z-50 shadow-2xl md:hidden"
             >
-              <nav className="flex flex-col p-6 gap-4">
-                {navLinks.map((link, index) => {
-                  const isActive = pathname === link.href;
-                  return (
-                    <motion.div
-                      key={link.href}
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                    >
-                      <Link
-                        href={link.href}
-                        onClick={(e) => {
-                          closeMenu();
-                          if (link.href.startsWith('#')) {
-                            e.preventDefault();
-                            const element = document.querySelector(link.href);
-                            element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                          }
-                        }}
-                        className={cn(
-                          'block px-4 py-3 rounded-lg text-base font-medium transition-colors',
-                          'backdrop-blur-xl bg-white/50 border border-white/40',
-                          'text-gray-900 shadow-sm',
-                          isActive
-                            ? 'bg-accent-primary/20 text-accent-primary border-accent-primary/30 font-semibold'
-                            : 'hover:bg-white/60 hover:border-white/50'
-                        )}
-                      >
-                        {link.name}
-                      </Link>
-                    </motion.div>
-                  );
-                })}
-                
-                {/* Social Icons in Mobile Menu */}
-                <div className="flex items-center gap-3 pt-4 border-t border-white/30">
-                  {socialLinks.map((link) => {
-                    const Icon = link.icon;
+              {/* Close Button - Prominent */}
+              <motion.button
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 0.1 }}
+                onClick={closeMenu}
+                className="absolute top-6 right-6 w-12 h-12 bg-accent-primary text-white rounded-lg flex items-center justify-center hover:bg-accent-secondary transition-colors shadow-lg focus:outline-none focus:ring-2 focus:ring-accent-primary focus:ring-offset-2"
+                aria-label="Close menu"
+              >
+                <X className="w-6 h-6" />
+              </motion.button>
+
+              {/* Menu Content */}
+              <nav className="pt-24 px-6 pb-6">
+                {/* Navigation Links */}
+                <ul className="space-y-2 mb-8">
+                  {navLinks.map((link, index) => {
+                    const isActive = pathname === link.href;
                     return (
-                      <motion.a
-                        key={link.name}
-                        href={link.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={link.name}
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: navLinks.length * 0.1 }}
-                        className="p-3 rounded-lg backdrop-blur-xl bg-white/50 border border-white/40 text-gray-700 hover:bg-white/60 hover:border-white/50 hover:text-accent-primary transition-all shadow-sm"
+                      <motion.li
+                        key={link.href}
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.1 }}
                       >
-                        <Icon className="w-5 h-5" />
-                      </motion.a>
+                        <Link
+                          href={link.href}
+                          onClick={(e) => {
+                            closeMenu();
+                            if (link.href.startsWith('#')) {
+                              e.preventDefault();
+                              const element = document.querySelector(link.href);
+                              element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }
+                          }}
+                          className={cn(
+                            'block py-4 px-4 text-lg font-semibold rounded-lg transition-colors',
+                            isActive
+                              ? 'bg-accent-primary/10 text-accent-primary border-2 border-accent-primary/30'
+                              : 'text-gray-900 hover:bg-gray-100'
+                          )}
+                        >
+                          {link.name}
+                        </Link>
+                      </motion.li>
                     );
                   })}
+                </ul>
+
+                {/* Social Links */}
+                <div className="pt-6 border-t border-gray-200">
+                  <p className="text-sm font-medium text-gray-500 mb-4">Connect</p>
+                  <div className="grid grid-cols-5 gap-3">
+                    {socialLinks.map((link) => {
+                      const Icon = link.icon;
+                      return (
+                        <motion.a
+                          key={link.name}
+                          href={link.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={link.name}
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ delay: navLinks.length * 0.1 }}
+                          className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center hover:bg-accent-primary hover:text-white transition-colors"
+                        >
+                          <Icon className="w-5 h-5" />
+                        </motion.a>
+                      );
+                    })}
+                  </div>
                 </div>
               </nav>
             </motion.div>
           </>
         )}
       </AnimatePresence>
-    </motion.header>
+    </>
   );
 }
-
