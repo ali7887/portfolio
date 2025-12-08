@@ -57,25 +57,20 @@ export function Header() {
         animate={{ y: 0 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
         className={cn(
-          'fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300',
+          'fixed top-0 left-0 right-0 z-50 border-b transition-all duration-500 ease-in-out',
           isScrolled
-            ? 'py-3 bg-white/60 backdrop-blur-xl shadow-sm border-gray-200/30'
-            : 'py-6 bg-white/95 backdrop-blur-md border-gray-200'
+            ? 'py-2 bg-white/50 backdrop-blur-xl shadow-md border-gray-200/40'
+            : 'py-6 bg-white border-b border-gray-200'
         )}
       >
         <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div
-            className={cn(
-              'flex items-center justify-between transition-all duration-300',
-              isScrolled ? 'h-12' : 'h-16 md:h-20'
-            )}
-          >
+          <div className="flex items-center justify-between">
             {/* Logo */}
             <Link
               href="/"
               className={cn(
-                'font-bold text-gradient-primary hover:opacity-80 transition-all',
-                isScrolled ? 'text-xl' : 'text-xl md:text-2xl'
+                'font-bold text-gradient-primary hover:opacity-80 transition-all duration-500',
+                isScrolled ? 'text-lg' : 'text-2xl'
               )}
               aria-label="Ali Kiani - Home"
             >
@@ -108,7 +103,8 @@ export function Header() {
                       }
                     }}
                     className={cn(
-                      'relative text-sm font-medium transition-colors',
+                      'relative font-medium transition-all duration-500',
+                      isScrolled ? 'text-sm' : 'text-base',
                       isActive
                         ? 'text-accent-primary'
                         : 'text-gray-700 hover:text-accent-primary'
@@ -140,9 +136,15 @@ export function Header() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={link.name}
-                    className="p-2 rounded-lg hover:bg-gray-100 transition-colors text-gray-700 hover:text-accent-primary hidden sm:flex"
+                    className={cn(
+                      'rounded-lg hover:bg-gray-100 transition-all duration-500 text-gray-700 hover:text-accent-primary hidden sm:flex',
+                      isScrolled ? 'p-1.5' : 'p-2'
+                    )}
                   >
-                    <Icon className="w-5 h-5" />
+                    <Icon className={cn(
+                      'transition-all duration-500',
+                      isScrolled ? 'w-4 h-4' : 'w-5 h-5'
+                    )} />
                   </a>
                 );
               })}
