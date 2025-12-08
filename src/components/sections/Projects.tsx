@@ -76,10 +76,10 @@ export function Projects({ showFilters = true, limit }: ProjectsProps) {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gradient-primary mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             Featured Projects
           </h2>
-          <p className="text-lg text-text-secondary max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             A collection of projects showcasing modern web development
             practices and technologies.
           </p>
@@ -124,7 +124,7 @@ export function Projects({ showFilters = true, limit }: ProjectsProps) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
             >
               {displayedProjects.map((project, index) => (
                 <ProjectCard
@@ -160,10 +160,10 @@ export function Projects({ showFilters = true, limit }: ProjectsProps) {
             <Link
               href="/projects"
               className={cn(
-                'neomorph-button px-8 py-3 rounded-lg',
+                'px-8 py-3 rounded-lg',
                 'inline-flex items-center gap-2',
-                'text-white font-semibold',
-                'hover:scale-105 transition-transform',
+                'bg-accent-primary text-white font-semibold',
+                'hover:bg-accent-secondary transition-colors',
                 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary'
               )}
             >
@@ -184,7 +184,7 @@ export function Projects({ showFilters = true, limit }: ProjectsProps) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={closeModal}
-              className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50"
+              className="fixed inset-0 bg-black/60 z-50"
               aria-hidden="true"
             />
 
@@ -199,19 +199,19 @@ export function Projects({ showFilters = true, limit }: ProjectsProps) {
               aria-modal="true"
               aria-labelledby="project-modal-title"
             >
-              <div className="glass-card-neon p-6 md:p-8">
+              <div className="bg-white rounded-xl p-6 md:p-8 shadow-2xl">
                 {/* Modal header */}
                 <div className="flex items-start justify-between mb-6">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
                       <h3
                         id="project-modal-title"
-                        className="text-2xl md:text-3xl font-bold text-gradient-primary"
+                        className="text-2xl md:text-3xl font-bold text-gray-900"
                       >
                         {selectedProject.title}
                       </h3>
                       {selectedProject.featured && (
-                        <span className="px-3 py-1 text-xs font-semibold rounded-full bg-accent-primary/20 text-accent-neon border border-accent-primary/50 flex items-center gap-1.5">
+                        <span className="px-3 py-1 text-xs font-semibold rounded-full bg-accent-primary/10 text-accent-primary flex items-center gap-1.5">
                           <span>⭐</span>
                           Featured
                         </span>
@@ -223,8 +223,8 @@ export function Projects({ showFilters = true, limit }: ProjectsProps) {
                     onClick={closeModal}
                     aria-label="Close modal"
                     className={cn(
-                      'glass-card p-2 rounded-lg',
-                      'hover:bg-white/[0.08] text-text-secondary hover:text-text-primary',
+                      'p-2 rounded-lg',
+                      'hover:bg-gray-100 text-gray-600 hover:text-gray-900',
                       'transition-colors',
                       'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary'
                     )}
@@ -241,20 +241,20 @@ export function Projects({ showFilters = true, limit }: ProjectsProps) {
                   className="space-y-6"
                 >
                   {/* Description */}
-                  <p className="text-text-secondary leading-relaxed">
+                  <p className="text-gray-600 leading-relaxed">
                     {selectedProject.description}
                   </p>
 
                   {/* Tech stack */}
                   <div>
-                    <h4 className="text-sm font-semibold text-text-primary mb-3">
+                    <h4 className="text-sm font-semibold text-gray-900 mb-3">
                       Tech Stack
                     </h4>
                     <div className="flex flex-wrap gap-2">
                       {selectedProject.tech.map((tech) => (
                         <span
                           key={tech}
-                          className="px-3 py-1.5 text-sm font-medium rounded-full bg-white/[0.08] text-accent-neon border border-accent-primary/30"
+                          className="px-3 py-1.5 text-sm font-medium rounded-full bg-gray-100 text-gray-700"
                         >
                           {tech}
                         </span>
@@ -273,9 +273,8 @@ export function Projects({ showFilters = true, limit }: ProjectsProps) {
                         whileTap={{ scale: 0.98 }}
                         className={cn(
                           'flex items-center justify-center gap-2 px-6 py-3 rounded-lg',
-                          'glass-card text-sm font-medium',
-                          'text-text-secondary hover:text-text-primary hover:bg-white/[0.08]',
-                          'transition-colors',
+                          'bg-gray-100 text-gray-700 text-sm font-medium',
+                          'hover:bg-gray-200 transition-colors',
                           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary'
                         )}
                       >
@@ -292,8 +291,8 @@ export function Projects({ showFilters = true, limit }: ProjectsProps) {
                         whileTap={{ scale: 0.98 }}
                         className={cn(
                           'flex items-center justify-center gap-2 px-6 py-3 rounded-lg',
-                          'neomorph-button text-sm',
-                          'text-white',
+                          'bg-accent-primary text-white text-sm font-medium',
+                          'hover:bg-accent-secondary transition-colors',
                           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary'
                         )}
                       >
