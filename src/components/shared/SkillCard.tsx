@@ -1,9 +1,25 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useMemo } from 'react';
-import * as simpleIcons from 'simple-icons';
-import { Code } from 'lucide-react';
+import {
+  SiReact,
+  SiNextdotjs,
+  SiTypescript,
+  SiNodedotjs,
+  SiExpress,
+  SiJavascript,
+  SiTailwindcss,
+  SiMongodb,
+  SiPostgresql,
+  SiGit,
+  SiDocker,
+  SiVercel,
+  SiRedux,
+  SiPrisma,
+  SiEthereum,
+  SiElementor,
+} from 'react-icons/si';
+import { Code, Brain } from 'lucide-react';
 import { fadeInUp } from '@/lib/animations';
 import { cn } from '@/lib/utils';
 import type { Skill } from '@/lib/types';
@@ -13,42 +29,33 @@ interface SkillCardProps {
   index?: number;
 }
 
+// Icon map for react-icons
+const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+  'nextdotjs': SiNextdotjs,
+  'react': SiReact,
+  'typescript': SiTypescript,
+  'nodedotjs': SiNodedotjs,
+  'express': SiExpress,
+  'javascript': SiJavascript,
+  'tailwindcss': SiTailwindcss,
+  'mongodb': SiMongodb,
+  'postgresql': SiPostgresql,
+  'git': SiGit,
+  'docker': SiDocker,
+  'vercel': SiVercel,
+  'redux': SiRedux,
+  'prisma': SiPrisma,
+  'ethereum': SiEthereum,
+  'elementor': SiElementor,
+  'openai': Brain,
+};
+
 /**
  * SkillCard - Simple card component for displaying skill names with brand icons
  * Features glass card styling with hover effects and animations
  */
 export function SkillCard({ skill, index = 0 }: SkillCardProps) {
-  // Get icon data from simple-icons
-  const iconData = useMemo(() => {
-    if (!skill.iconName) return null;
-    
-    try {
-      // Convert iconName to simple-icons format
-      // e.g., "nextdotjs" → "siNextdotjs"
-      const iconKey = `si${skill.iconName.charAt(0).toUpperCase()}${skill.iconName.slice(1)}`;
-      return simpleIcons[iconKey as keyof typeof simpleIcons];
-    } catch {
-      return null;
-    }
-  }, [skill.iconName]);
-
-  // Create SVG path from icon data
-  const iconSvg = useMemo(() => {
-    if (!iconData) return null;
-    
-    return (
-      <svg
-        role="img"
-        viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
-        className="w-16 h-16"
-        fill="currentColor"
-      >
-        <title>{iconData.title}</title>
-        <path d={iconData.path} />
-      </svg>
-    );
-  }, [iconData]);
+  const IconComponent = skill.iconName ? iconMap[skill.iconName] : null;
 
   return (
     <motion.div
@@ -71,26 +78,18 @@ export function SkillCard({ skill, index = 0 }: SkillCardProps) {
     >
       {/* Icon */}
       <motion.div
-        className="flex items-center justify-center p-4 rounded-xl border-2 shadow-sm"
+        className="flex items-center justify-center p-4 rounded-xl border-2 shadow-sm bg-accent-primary/10 border-accent-primary/30"
         whileHover={{
           scale: 1.15,
           boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)',
         }}
         transition={{ duration: 0.2 }}
-        style={{
-          color: iconData ? `#${iconData.hex}` : 'var(--accent-primary)',
-          backgroundColor: iconData ? `${iconData.hex}15` : 'rgba(2, 132, 199, 0.1)',
-          borderColor: iconData ? `${iconData.hex}40` : 'rgba(2, 132, 199, 0.3)',
-        }}
       >
-        <div
-          style={{
-            filter: iconData ? `brightness(1.3) saturate(1.5) contrast(1.2)` : 'none',
-            opacity: 0.9,
-          }}
-        >
-          {iconSvg || (
-            <Code className="w-16 h-16 text-accent-primary" />
+        <div className="opacity-90">
+          {IconComponent ? (
+            <IconComponent className="w-12 h-12 text-accent-primary" />
+          ) : (
+            <Code className="w-12 h-12 text-accent-primary" />
           )}
         </div>
       </motion.div>

@@ -1,12 +1,38 @@
+import dynamic from 'next/dynamic';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { ScrollToTop } from '@/components/shared/ScrollToTop';
 import { Hero } from '@/components/sections/Hero';
 import { AboutIntro } from '@/components/sections/AboutIntro';
-import { Skills } from '@/components/sections/Skills';
-import { Projects } from '@/components/sections/Projects';
-import { Experience } from '@/components/sections/Experience';
-import { Contact } from '@/components/sections/Contact';
+
+// Lazy load heavy sections
+const Skills = dynamic(
+  () => import('@/components/sections/Skills').then(mod => ({ default: mod.Skills })),
+  {
+    loading: () => <div className="py-20 text-center text-gray-600">Loading...</div>,
+  }
+);
+
+const Projects = dynamic(
+  () => import('@/components/sections/Projects').then(mod => ({ default: mod.Projects })),
+  {
+    loading: () => <div className="py-20 text-center text-gray-600">Loading...</div>,
+  }
+);
+
+const Experience = dynamic(
+  () => import('@/components/sections/Experience').then(mod => ({ default: mod.Experience })),
+  {
+    loading: () => <div className="py-20 text-center text-gray-600">Loading...</div>,
+  }
+);
+
+const Contact = dynamic(
+  () => import('@/components/sections/Contact').then(mod => ({ default: mod.Contact })),
+  {
+    loading: () => <div className="py-20 text-center text-gray-600">Loading...</div>,
+  }
+);
 
 /**
  * Homepage - Single-page portfolio

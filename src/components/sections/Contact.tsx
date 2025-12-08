@@ -1,50 +1,81 @@
 'use client';
 
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { useState, FormEvent, ChangeEvent } from 'react';
 import { motion } from 'framer-motion';
 import { Send, Loader2 } from 'lucide-react';
-import { contactSchema, type ContactFormData } from '@/lib/schemas';
+import { contactSchema } from '@/lib/schemas';
 import { fadeInUp, staggerContainer } from '@/lib/animations';
 import { cn } from '@/lib/utils';
 
 /**
  * Contact - Contact form section with validation
- * Features React Hook Form + Zod validation and contact info
+ * Simplified form using React state instead of react-hook-form
  */
 export function Contact() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: '',
+  });
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-    reset,
-  } = useForm<ContactFormData>({
-    resolver: zodResolver(contactSchema),
-    mode: 'onChange',
-  });
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    // Clear error when typing
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: '' }));
+    }
+    // Clear success/error messages when user types
+    if (submitSuccess) setSubmitSuccess(false);
+    if (submitError) setSubmitError(null);
+  };
 
-  const onSubmit = async (data: ContactFormData) => {
-    setIsSubmitting(true);
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setErrors({});
+    setSubmitError(null);
     setSubmitSuccess(false);
 
+    // Validate with Zod
+    const result = contactSchema.safeParse(formData);
+
+    if (!result.success) {
+      const newErrors: Record<string, string> = {};
+      result.error.errors.forEach(err => {
+        if (err.path[0]) {
+          newErrors[err.path[0].toString()] = err.message;
+        }
+      });
+      setErrors(newErrors);
+      return;
+    }
+
+    setIsSubmitting(true);
+
     try {
-      // TODO: Add API route in next task
-      console.log('Form data:', data);
-      
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      
-      setSubmitSuccess(true);
-      reset();
-      
-      // Reset success message after 5 seconds
-      setTimeout(() => setSubmitSuccess(false), 5000);
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setSubmitSuccess(true);
+        setFormData({ name: '', email: '', subject: '', message: '' });
+        // Reset success message after 5 seconds
+        setTimeout(() => setSubmitSuccess(false), 5000);
+      } else {
+        setSubmitError(result.message || 'Failed to send message. Please try again.');
+      }
     } catch (error) {
-      console.error('Form submission error:', error);
+      setSubmitError('Network error. Please check your connection and try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -83,31 +114,31 @@ export function Contact() {
         >
           <motion.div variants={fadeInUp} className="w-full max-w-2xl">
             <div className="bg-white rounded-xl border border-gray-200 p-6 md:p-8 shadow-sm">
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Name field */}
                 <div>
                   <label
                     htmlFor="name"
-                    className="block text-sm font-medium text-gray-900 mb-2"
+                    className="block text-sm font-medium text-gray-700 mb-2"
                   >
                     Name <span className="text-red-500">*</span>
                   </label>
                   <input
-                    {...register('name')}
                     type="text"
                     id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
                     className={cn(
-                      'w-full px-4 py-3 rounded-lg',
-                      'bg-white border border-gray-200',
-                      'text-gray-900 placeholder-gray-400',
-                      'focus:outline-none focus:ring-2 focus:ring-accent-primary focus:border-accent-primary',
+                      'w-full px-4 py-3 border border-gray-300 rounded-lg',
+                      'focus:ring-2 focus:ring-accent-primary focus:border-transparent',
                       'transition-colors',
                       errors.name && 'border-red-500 focus:ring-red-500'
                     )}
                     placeholder="Your name"
                   />
                   {errors.name && (
-                    <p className="mt-1 text-sm text-red-400">{errors.name.message}</p>
+                    <p className="mt-1 text-sm text-red-600">{errors.name}</p>
                   )}
                 </div>
 
@@ -115,26 +146,26 @@ export function Contact() {
                 <div>
                   <label
                     htmlFor="email"
-                    className="block text-sm font-medium text-gray-900 mb-2"
+                    className="block text-sm font-medium text-gray-700 mb-2"
                   >
                     Email <span className="text-red-500">*</span>
                   </label>
                   <input
-                    {...register('email')}
                     type="email"
                     id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
                     className={cn(
-                      'w-full px-4 py-3 rounded-lg',
-                      'bg-white border border-gray-200',
-                      'text-gray-900 placeholder-gray-400',
-                      'focus:outline-none focus:ring-2 focus:ring-accent-primary focus:border-accent-primary',
+                      'w-full px-4 py-3 border border-gray-300 rounded-lg',
+                      'focus:ring-2 focus:ring-accent-primary focus:border-transparent',
                       'transition-colors',
                       errors.email && 'border-red-500 focus:ring-red-500'
                     )}
                     placeholder="your.email@example.com"
                   />
                   {errors.email && (
-                    <p className="mt-1 text-sm text-red-400">{errors.email.message}</p>
+                    <p className="mt-1 text-sm text-red-600">{errors.email}</p>
                   )}
                 </div>
 
@@ -142,26 +173,26 @@ export function Contact() {
                 <div>
                   <label
                     htmlFor="subject"
-                    className="block text-sm font-medium text-gray-900 mb-2"
+                    className="block text-sm font-medium text-gray-700 mb-2"
                   >
                     Subject <span className="text-red-500">*</span>
                   </label>
                   <input
-                    {...register('subject')}
                     type="text"
                     id="subject"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
                     className={cn(
-                      'w-full px-4 py-3 rounded-lg',
-                      'bg-white border border-gray-200',
-                      'text-gray-900 placeholder-gray-400',
-                      'focus:outline-none focus:ring-2 focus:ring-accent-primary focus:border-accent-primary',
+                      'w-full px-4 py-3 border border-gray-300 rounded-lg',
+                      'focus:ring-2 focus:ring-accent-primary focus:border-transparent',
                       'transition-colors',
                       errors.subject && 'border-red-500 focus:ring-red-500'
                     )}
-                    placeholder="What's this about?"
+                    placeholder="Project inquiry"
                   />
                   {errors.subject && (
-                    <p className="mt-1 text-sm text-red-400">{errors.subject.message}</p>
+                    <p className="mt-1 text-sm text-red-600">{errors.subject}</p>
                   )}
                 </div>
 
@@ -169,26 +200,26 @@ export function Contact() {
                 <div>
                   <label
                     htmlFor="message"
-                    className="block text-sm font-medium text-gray-900 mb-2"
+                    className="block text-sm font-medium text-gray-700 mb-2"
                   >
                     Message <span className="text-red-500">*</span>
                   </label>
                   <textarea
-                    {...register('message')}
                     id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
                     rows={6}
                     className={cn(
-                      'w-full px-4 py-3 rounded-lg resize-none',
-                      'bg-white border border-gray-200',
-                      'text-gray-900 placeholder-gray-400',
-                      'focus:outline-none focus:ring-2 focus:ring-accent-primary focus:border-accent-primary',
+                      'w-full px-4 py-3 border border-gray-300 rounded-lg resize-none',
+                      'focus:ring-2 focus:ring-accent-primary focus:border-transparent',
                       'transition-colors',
                       errors.message && 'border-red-500 focus:ring-red-500'
                     )}
                     placeholder="Tell me about your project..."
                   />
                   {errors.message && (
-                    <p className="mt-1 text-sm text-red-400">{errors.message.message}</p>
+                    <p className="mt-1 text-sm text-red-600">{errors.message}</p>
                   )}
                 </div>
 
@@ -197,25 +228,34 @@ export function Contact() {
                   <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="p-4 rounded-lg bg-green-500/20 border border-green-500/50 text-green-400"
+                    className="p-4 rounded-lg bg-green-500/20 border border-green-500/50 text-green-600"
                   >
                     Message sent successfully! I&apos;ll get back to you soon.
+                  </motion.div>
+                )}
+
+                {/* Error message */}
+                {submitError && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="p-4 rounded-lg bg-red-500/20 border border-red-500/50 text-red-600"
+                  >
+                    {submitError}
                   </motion.div>
                 )}
 
                 {/* Submit button */}
                 <motion.button
                   type="submit"
-                  disabled={!isValid || isSubmitting}
-                  whileHover={{ scale: isValid && !isSubmitting ? 1.02 : 1 }}
-                  whileTap={{ scale: isValid && !isSubmitting ? 0.98 : 1 }}
+                  disabled={isSubmitting}
+                  whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
+                  whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
                   className={cn(
-                    'w-full px-6 py-3 rounded-lg',
-                    'flex items-center justify-center gap-2',
-                    'bg-accent-primary text-white font-semibold',
-                    'hover:bg-accent-secondary',
+                    'w-full px-8 py-3 bg-accent-primary text-white rounded-lg font-semibold',
+                    'hover:bg-accent-secondary transition-colors',
                     'disabled:opacity-50 disabled:cursor-not-allowed',
-                    'transition-colors',
+                    'flex items-center justify-center gap-2',
                     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary'
                   )}
                 >
@@ -239,4 +279,3 @@ export function Contact() {
     </section>
   );
 }
-
