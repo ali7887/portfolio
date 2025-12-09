@@ -50,12 +50,44 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   'openai': Brain,
 };
 
+// Vibrant brand colors for icons
+const iconColors: Record<string, string> = {
+  // Frontend Frameworks - روشن و پررنگ
+  'nextdotjs': '#000000',        // Next.js - Pure Black
+  'react': '#61DAFB',            // React - Bright Cyan
+  
+  // Languages - زرد و آبی درخشان
+  'typescript': '#3178C6',       // TypeScript - Vibrant Blue
+  'javascript': '#F7DF1E',       // JavaScript - Bright Yellow
+  
+  // Backend - سبز و خاکستری روشن
+  'nodedotjs': '#5FA04E',        // Node.js - Bright Green
+  'express': '#000000',          // Express - Black
+  
+  // State Management - بنفش روشن
+  'redux': '#764ABC',            // Redux - Purple
+  
+  // Styling - آبی فیروزه‌ای
+  'tailwindcss': '#06B6D4',      // Tailwind - Cyan
+  
+  // Databases - سبز و آبی
+  'mongodb': '#47A248',          // MongoDB - Leaf Green
+  'postgresql': '#4169E1',       // PostgreSQL - Royal Blue
+  
+  // ORM - سبز دریایی
+  'prisma': '#2D3748',           // Prisma - Dark Navy
+  
+  // Page Builders - صورتی
+  'elementor': '#92003B',        // Elementor - Deep Pink
+};
+
 /**
  * SkillCard - Simple card component for displaying skill names with brand icons
  * Features glass card styling with hover effects and animations
  */
 export function SkillCard({ skill, index = 0 }: SkillCardProps) {
   const IconComponent = skill.iconName ? iconMap[skill.iconName] : null;
+  const iconColor = skill.iconName ? iconColors[skill.iconName] : '#0284C7';
 
   return (
     <motion.div
@@ -85,11 +117,17 @@ export function SkillCard({ skill, index = 0 }: SkillCardProps) {
         }}
         transition={{ duration: 0.2 }}
       >
-        <div className="flex items-center justify-center">
+        <div
+          className="flex items-center justify-center"
+          style={{ color: iconColor }}
+        >
           {IconComponent ? (
-            <IconComponent className="w-12 h-12 transition-transform" />
+            <IconComponent
+              className="w-12 h-12 transition-transform"
+              {...({ style: { fill: 'currentColor' } } as any)}
+            />
           ) : (
-            <Code className="w-12 h-12 text-accent-primary" />
+            <Code className="w-12 h-12" style={{ color: '#0284C7' }} />
           )}
         </div>
       </motion.div>
