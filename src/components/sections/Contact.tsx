@@ -3,6 +3,7 @@
 import { useState, FormEvent, ChangeEvent } from 'react';
 import { motion } from 'framer-motion';
 import { Send, Loader2 } from 'lucide-react';
+import emailjs from '@emailjs/browser';
 import { contactSchema } from '@/lib/schemas';
 import { fadeInUp, staggerContainer } from '@/lib/animations';
 import { cn } from '@/lib/utils';
@@ -58,24 +59,31 @@ export function Contact() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
+      // Prepare template parameters for EmailJS
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        subject: formData.subject || 'New Contact Form Message',
+        message: formData.message,
+      };
 
-      const result = await response.json();
+      // Send email using EmailJS
+      const response = await emailjs.send(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+        templateParams,
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
+      );
 
-      if (response.ok) {
-        setSubmitSuccess(true);
-        setFormData({ name: '', email: '', subject: '', message: '' });
-        // Reset success message after 5 seconds
-        setTimeout(() => setSubmitSuccess(false), 5000);
-      } else {
-        setSubmitError(result.message || 'Failed to send message. Please try again.');
-      }
+      console.log('Email sent successfully:', response);
+
+      setSubmitSuccess(true);
+      setFormData({ name: '', email: '', subject: '', message: '' });
+      // Reset success message after 5 seconds
+      setTimeout(() => setSubmitSuccess(false), 5000);
     } catch (error) {
-      setSubmitError('Network error. Please check your connection and try again.');
+      console.error('Error sending email:', error);
+      setSubmitError('Failed to send message. Please try again or email me directly.');
     } finally {
       setIsSubmitting(false);
     }
