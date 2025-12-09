@@ -32,7 +32,7 @@ export function Header() {
   // Scroll detection
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 10);
     };
 
     // Initial check
@@ -63,13 +63,15 @@ export function Header() {
         animate={{ y: 0 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
         className={cn(
-          'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+          'fixed top-0 left-0 right-0 z-50 relative transition-all duration-300',
+          isScrolled ? 'py-2' : 'py-6',
+          'before:absolute before:inset-0 before:transition-all before:duration-300 before:-z-10',
           isScrolled
-            ? 'py-2 bg-white/70 dark:bg-gray-900/70 backdrop-blur-xl backdrop-saturate-150 shadow-2xl border-b border-gray-200/50 dark:border-gray-700/50'
-            : 'py-6 bg-white/0 dark:bg-gray-900/0 border-b border-transparent'
+            ? 'before:bg-white/10 dark:before:bg-black/10 before:backdrop-blur-xl before:opacity-100 before:border-b before:border-white/10 dark:before:border-white/5 before:shadow-lg'
+            : 'before:bg-transparent before:opacity-0 before:backdrop-blur-none before:shadow-none before:border-transparent'
         )}
       >
-        <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <nav className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link
