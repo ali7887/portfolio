@@ -9,6 +9,26 @@ import { fadeInUp, staggerContainer } from '@/lib/animations';
 import { cn } from '@/lib/utils';
 
 /**
+ * Validate EmailJS environment variables
+ */
+const validateEmailJSConfig = () => {
+  const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+  const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+  const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+
+  if (!serviceId || !templateId || !publicKey) {
+    console.error('EmailJS Configuration Error:', {
+      serviceId: serviceId ? '✓ Present' : '✗ Missing',
+      templateId: templateId ? '✓ Present' : '✗ Missing',
+      publicKey: publicKey ? '✓ Present' : '✗ Missing',
+    });
+    return false;
+  }
+
+  return true;
+};
+
+/**
  * Contact - Contact form section with validation
  * Simplified form using React state instead of react-hook-form
  */
@@ -56,9 +76,27 @@ export function Contact() {
       return;
     }
 
+    // Validate EmailJS configuration
+    if (!validateEmailJSConfig()) {
+      setSubmitError(
+        'Email service is not configured. Please contact me directly at ali@alikiani.co'
+      );
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
+      // Get environment variables
+      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+
+      // Double check they exist (TypeScript safety)
+      if (!serviceId || !templateId || !publicKey) {
+        throw new Error('EmailJS configuration is missing');
+      }
+
       // Prepare template parameters for EmailJS
       const templateParams = {
         from_name: formData.name,
@@ -67,12 +105,16 @@ export function Contact() {
         message: formData.message,
       };
 
+      console.log('Attempting to send email with EmailJS...');
+      console.log('Service ID:', serviceId);
+      console.log('Template ID:', templateId);
+
       // Send email using EmailJS
       const response = await emailjs.send(
-        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
-        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+        serviceId,
+        templateId,
         templateParams,
-        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
+        publicKey
       );
 
       console.log('Email sent successfully:', response);
@@ -81,9 +123,26 @@ export function Contact() {
       setFormData({ name: '', email: '', subject: '', message: '' });
       // Reset success message after 5 seconds
       setTimeout(() => setSubmitSuccess(false), 5000);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error sending email:', error);
-      setSubmitError('Failed to send message. Please try again or email me directly.');
+      console.error('Error details:', {
+        message: error?.message || 'Unknown error',
+        text: error?.text || 'No error text',
+        status: error?.status || 'No status',
+      });
+
+      // More specific error message
+      let errorMessage = 'Failed to send message. ';
+
+      if (error?.text) {
+        errorMessage += `Error: ${error.text}. `;
+      } else if (error?.message) {
+        errorMessage += `Error: ${error.message}. `;
+      }
+
+      errorMessage += 'Please try again or contact me directly.';
+
+      setSubmitError(errorMessage);
     } finally {
       setIsSubmitting(false);
     }

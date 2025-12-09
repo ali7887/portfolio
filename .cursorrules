@@ -1,0 +1,877 @@
+# Ali Kiani Portfolio - Cursor AI Rules
+
+## Project Overview
+Production-ready personal portfolio website for Ali Kiani, Senior Frontend Developer with 10+ years experience specializing in React, Next.js, TypeScript, performance optimization, AI/LLM integration, and Web3 technologies.
+
+---
+
+## Tech Stack (MANDATORY - Never Substitute)
+
+### Core Framework
+- **Next.js 15+** with App Router (no Pages Router)
+- **TypeScript** (strict mode enabled)
+- **React 19+** (use Server Components by default)
+
+### Styling & UI
+- **Tailwind CSS v4** (utility-first, no custom CSS unless necessary)
+- **Framer Motion** (all animations and transitions)
+- **shadcn/ui** (for complex UI components)
+- **Lucide React** (icon system)
+
+### Data & Forms
+- **React Hook Form** (form state management)
+- **Zod** (schema validation)
+- **next-intl** (internationalization)
+
+### Code Quality
+- **ESLint** (strict configuration)
+- **Prettier** (consistent formatting)
+- **Husky** (pre-commit hooks)
+- **TypeScript strict mode** (no implicit any)
+
+---
+
+## Design System: Dark Glass UI Theme
+
+### Color Palette (Use Exact Hex Values)
+```typescript
+// Backgrounds
+--bg-primary: #060810
+--bg-secondary: #0b1220
+--bg-gradient: linear-gradient(135deg, #060810 0%, #0b1220 100%)
+
+// Glass & Surfaces
+--glass-bg: rgba(255, 255, 255, 0.04)
+--glass-border: rgba(255, 255, 255, 0.08)
+--glass-hover: rgba(255, 255, 255, 0.06)
+
+// Accent Colors
+--accent-primary: #06b6d4    // Cyan (primary CTAs)
+--accent-secondary: #7c3aed  // Purple (highlights)
+--accent-neon: #00e5ff       // Neon glow effects
+
+// Text Colors
+--text-primary: #e6eef2
+--text-secondary: #9aa4b2
+--text-muted: #6b7280
+
+// Shadows
+--shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.4)
+--shadow-neon: 0 0 20px rgba(0, 229, 255, 0.3)
+--shadow-soft: 0 4px 16px rgba(0, 0, 0, 0.2)
+```
+
+### Glass Card Pattern (Use Everywhere)
+```typescript
+// Standard glass card
+className="backdrop-blur-xl bg-white/[0.04] border border-white/[0.08] rounded-2xl p-6 shadow-[0_8px_32px_rgba(0,0,0,0.4)] transition-all duration-300 hover:bg-white/[0.06]"
+
+// Glass card with neon accent
+className="backdrop-blur-xl bg-white/[0.04] border border-white/[0.08] rounded-2xl p-6 shadow-[0_8px_32px_rgba(0,0,0,0.4),0_0_20px_rgba(0,229,255,0.1)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.4),0_0_30px_rgba(0,229,255,0.2)]"
+```
+
+### Neumorphic Elements (Buttons & Skill Cards Only)
+```typescript
+// Neumorphic button
+className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 shadow-[inset_2px_2px_5px_rgba(255,255,255,0.05),inset_-2px_-2px_5px_rgba(0,0,0,0.5)] active:shadow-[inset_1px_1px_3px_rgba(255,255,255,0.08),inset_-1px_-1px_3px_rgba(0,0,0,0.6)] transition-all duration-200"
+```
+
+### Animation Guidelines
+- **Entry animations:** Fade in + slide up (20px offset)
+- **Stagger delay:** 0.1s between children
+- **Hover effects:** Scale 1.02-1.05, no more
+- **Transitions:** 200-300ms duration, easeOut
+- **Scroll animations:** Trigger at 50% viewport intersection
+
+---
+
+## Project Structure (Mandatory)
+
+```
+ali-kiani-portfolio/
+├── .cursorrules                 # This file
+├── .eslintrc.json              # ESLint configuration
+├── .prettierrc                 # Prettier configuration
+├── next.config.ts              # Next.js configuration
+├── tailwind.config.ts          # Tailwind + theme tokens
+├── tsconfig.json               # TypeScript strict config
+├── package.json                # Dependencies
+│
+├── public/
+│   ├── images/                 # Optimized images
+│   ├── resume.pdf              # Downloadable resume
+│   └── favicon.ico
+│
+├── src/
+│   ├── app/
+│   │   ├── layout.tsx          # Root layout with metadata
+│   │   ├── page.tsx            # Homepage
+│   │   ├── about/page.tsx
+│   │   ├── projects/page.tsx
+│   │   ├── contact/page.tsx
+│   │   ├── api/
+│   │   │   └── contact/route.ts  # Contact form API
+│   │   └── not-found.tsx       # Custom 404
+│   │
+│   ├── components/
+│   │   ├── layout/
+│   │   │   ├── Header.tsx
+│   │   │   ├── Footer.tsx
+│   │   │   └── Sidebar.tsx
+│   │   ├── sections/
+│   │   │   ├── Hero.tsx
+│   │   │   ├── About.tsx
+│   │   │   ├── Projects.tsx
+│   │   │   ├── Skills.tsx
+│   │   │   ├── Experience.tsx
+│   │   │   ├── Services.tsx
+│   │   │   ├── Testimonials.tsx
+│   │   │   └── Contact.tsx
+│   │   ├── ui/               # shadcn/ui components
+│   │   └── shared/           # Reusable components
+│   │       ├── ThemeToggle.tsx
+│   │       ├── LanguageSwitcher.tsx
+│   │       └── AnimatedSection.tsx
+│   │
+│   ├── lib/
+│   │   ├── types.ts          # TypeScript interfaces
+│   │   ├── constants.ts      # Static data
+│   │   ├── utils.ts          # Helper functions
+│   │   └── animations.ts     # Framer Motion variants
+│   │
+│   ├── i18n/
+│   │   ├── locales/
+│   │   │   ├── en.json
+│   │   │   ├── fa.json
+│   │   │   └── az_ir.json
+│   │   └── config.ts
+│   │
+│   └── styles/
+│       ├── globals.css       # Tailwind directives + custom vars
+│       └── glass-utils.css   # Glassmorphism utilities
+```
+
+---
+
+## Coding Standards (CRITICAL - Always Follow)
+
+### TypeScript Rules
+```typescript
+// ✅ DO: Proper typing
+interface HeroProps {
+  title: string;
+  subtitle: string;
+  ctaText?: string;
+}
+
+export function Hero({ title, subtitle, ctaText = 'Get Started' }: HeroProps) {
+  // Implementation
+}
+
+// ❌ DON'T: Using 'any' or missing types
+export function Hero(props: any) { ... }
+```
+
+### Component Structure Template
+```typescript
+'use client'; // Only if using hooks, state, or browser APIs
+
+import { motion } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
+import type { ComponentProps } from '@/lib/types';
+
+interface ComponentNameProps {
+  /** Brief description of prop */
+  title: string;
+  /** Optional prop with default */
+  variant?: 'primary' | 'secondary';
+}
+
+/**
+ * ComponentName - Brief description
+ * 
+ * @example
+ * <ComponentName title="Hello" variant="primary" />
+ */
+export function ComponentName({ 
+  title, 
+  variant = 'primary' 
+}: ComponentNameProps) {
+  // 1. Hooks (useState, useEffect, etc.)
+  
+  // 2. Event handlers
+  const handleClick = () => {
+    // Implementation
+  };
+  
+  // 3. Render helpers
+  
+  // 4. Return JSX
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+      className="glass-card"
+    >
+      <h2 className="text-2xl font-bold text-text-primary">{title}</h2>
+    </motion.div>
+  );
+}
+```
+
+### File Naming Conventions
+- **Components:** `PascalCase.tsx` (e.g., `ProjectCard.tsx`)
+- **Utilities:** `camelCase.ts` (e.g., `formatDate.ts`)
+- **Types:** `PascalCase` with `Type` or `Interface` suffix
+- **Constants:** `SCREAMING_SNAKE_CASE`
+- **Page routes:** `kebab-case` folders with `page.tsx`
+
+### Import Order (Auto-formatted by ESLint)
+```typescript
+// 1. React & Next.js
+import { useState } from 'react';
+import Image from 'next/image';
+
+// 2. External libraries
+import { motion } from 'framer-motion';
+import { Mail } from 'lucide-react';
+
+// 3. Internal components
+import { Button } from '@/components/ui/button';
+import { Hero } from '@/components/sections/Hero';
+
+// 4. Utils & types
+import { cn } from '@/lib/utils';
+import type { Project } from '@/lib/types';
+
+// 5. Styles (rare - prefer Tailwind)
+import styles from './Component.module.css';
+```
+
+---
+
+## DO's (Always Follow)
+
+### Code Quality
+- ✅ Write complete, production-ready code (no placeholders)
+- ✅ Add TypeScript interfaces for ALL props and data
+- ✅ Include JSDoc comments for complex functions
+- ✅ Use named exports (better tree-shaking)
+- ✅ Implement proper error boundaries
+- ✅ Add loading states with skeleton screens
+- ✅ Write mobile-first responsive code
+
+### Performance
+- ✅ Use React Server Components by default
+- ✅ Add `'use client'` only when necessary (hooks, state, browser APIs)
+- ✅ Lazy load below-the-fold components: `const Component = dynamic(() => import('./Component'))`
+- ✅ Optimize images with `<Image priority>` for LCP
+- ✅ Debounce search inputs (300ms)
+- ✅ Memoize expensive calculations with `useMemo`
+
+### Accessibility
+- ✅ Add ARIA labels to interactive elements
+- ✅ Ensure keyboard navigation works (focus states)
+- ✅ Maintain 4.5:1 contrast ratio (WCAG AA)
+- ✅ Use semantic HTML (`<nav>`, `<main>`, `<section>`)
+- ✅ Add alt text to all images
+- ✅ Test with screen reader in mind
+
+### SEO & Metadata
+- ✅ Add proper metadata in `layout.tsx`
+- ✅ Use structured data (JSON-LD)
+- ✅ Generate sitemap.xml
+- ✅ Implement robots.txt
+- ✅ Add Open Graph tags
+- ✅ Include canonical URLs
+
+---
+
+## DON'Ts (Never Do)
+
+### Code Anti-Patterns
+- ❌ Use `any` type - always type properly or use `unknown`
+- ❌ Create inline styles - use Tailwind utilities
+- ❌ Use default exports - prefer named exports
+- ❌ Ignore TypeScript errors - fix them immediately
+- ❌ Write massive files - split into smaller components
+- ❌ Hardcode strings - use constants or i18n keys
+- ❌ Skip error handling in async operations
+- ❌ Use deprecated Next.js features (getStaticProps, etc.)
+
+### Performance Killers
+- ❌ Add 'use client' to every component
+- ❌ Fetch data client-side when server-side is possible
+- ❌ Forget to optimize images (always use next/image)
+- ❌ Create unnecessary re-renders (memoize when needed)
+- ❌ Load heavy libraries without code splitting
+
+### Accessibility Violations
+- ❌ Skip focus states on interactive elements
+- ❌ Use div/span for buttons (use `<button>`)
+- ❌ Forget alt text on images
+- ❌ Ignore color contrast requirements
+- ❌ Create keyboard traps
+
+---
+
+## Framer Motion Animation Patterns
+
+### Standard Page Entrance
+```typescript
+const pageVariants = {
+  hidden: { opacity: 0 },
+  visible: { 
+    opacity: 1,
+    transition: {
+      duration: 0.4,
+      staggerChildren: 0.1
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { duration: 0.3 }
+  }
+};
+
+// Usage
+<motion.div variants={pageVariants} initial="hidden" animate="visible">
+  <motion.div variants={itemVariants}>Item 1</motion.div>
+  <motion.div variants={itemVariants}>Item 2</motion.div>
+</motion.div>
+```
+
+### Scroll-Triggered Animation
+```typescript
+import { useInView } from 'framer-motion';
+import { useRef } from 'react';
+
+const ref = useRef(null);
+const isInView = useInView(ref, { once: true, amount: 0.5 });
+
+<motion.div
+  ref={ref}
+  initial={{ opacity: 0, y: 50 }}
+  animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+  transition={{ duration: 0.5 }}
+>
+  Content
+</motion.div>
+```
+
+### Hover Effects
+```typescript
+<motion.div
+  whileHover={{ scale: 1.05 }}
+  whileTap={{ scale: 0.98 }}
+  transition={{ type: 'spring', stiffness: 300 }}
+>
+  Card Content
+</motion.div>
+```
+
+---
+
+## Content & Personal Data
+
+### Ali Kiani Profile (Use Exactly)
+```typescript
+export const PERSONAL_INFO = {
+  name: 'Ali Kiani',
+  role: 'Senior Frontend Developer',
+  experience: '10+ years',
+  location: 'Available Worldwide (Remote)',
+  email: 'ali@alikiani.co',
+  
+  specialties: [
+    'React & Next.js Architecture',
+    'TypeScript & Modern JavaScript',
+    'Performance Optimization',
+    'AI/LLM Integration',
+    'Web3 & Blockchain',
+    'UI/UX Design Systems',
+    'Accessibility (WCAG AA)',
+    'Node.js Backend Development'
+  ],
+  
+  techStack: {
+    frontend: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
+    backend: ['Node.js', 'Express.js', 'Nest.js', 'PostgreSQL', 'MongoDB'],
+    tools: ['Git', 'Docker', 'Vercel', 'AWS', 'Figma'],
+    specializations: ['Web3/ethers.js', 'AI/LangChain', 'Chrome Extensions']
+  },
+  
+  values: [
+    'Write clean, maintainable code',
+    'Performance is a feature',
+    'Accessibility is non-negotiable',
+    'User experience above all'
+  ]
+};
+```
+
+### Sample Projects (Prefill These)
+```typescript
+export const PROJECTS = [
+  {
+    id: 1,
+    title: 'Rest Reminder',
+    description: 'Productivity-focused Chrome extension that reminds users to take breaks with customizable intervals and notification system.',
+    tech: ['React', 'TypeScript', 'Chrome Extensions API', 'Tailwind CSS'],
+    github: 'https://github.com/alikiani/rest-reminder',
+    live: 'https://chrome.google.com/webstore/...',
+    image: '/images/projects/rest-reminder.png',
+    featured: true
+  },
+  {
+    id: 2,
+    title: 'AliKiani.co Portfolio',
+    description: 'Modern portfolio website built with cutting-edge web technologies featuring dark glass UI theme and advanced animations.',
+    tech: ['Next.js 15', 'TypeScript', 'Tailwind v4', 'Framer Motion'],
+    github: 'https://github.com/alikiani/portfolio',
+    live: 'https://alikiani.co',
+    image: '/images/projects/portfolio.png',
+    featured: true
+  },
+  {
+    id: 3,
+    title: 'Mini Notes',
+    description: 'Minimalist note-taking PWA with offline support, markdown rendering, and local storage persistence.',
+    tech: ['React', 'PWA', 'localStorage', 'Markdown', 'Tailwind CSS'],
+    github: 'https://github.com/alikiani/mini-notes',
+    live: 'https://mini-notes.alikiani.co',
+    image: '/images/projects/mini-notes.png',
+    featured: false
+  },
+  {
+    id: 4,
+    title: 'DApp Wallet Connect',
+    description: 'Web3 integration demo showcasing blockchain wallet connections and smart contract interactions.',
+    tech: ['React', 'ethers.js', 'Wagmi', 'RainbowKit', 'Solidity'],
+    github: 'https://github.com/alikiani/dapp-demo',
+    live: 'https://dapp.alikiani.co',
+    image: '/images/projects/dapp.png',
+    featured: true
+  }
+];
+```
+
+---
+
+## Internationalization (i18n)
+
+### Supported Languages
+- **English (en)** - Default
+- **Persian (fa)** - RTL layout
+
+
+### Implementation Pattern
+```typescript
+// i18n/config.ts
+export const locales = ['en', 'fa'] as const;
+export type Locale = typeof locales[number];
+
+export const localeNames = {
+  en: 'English',
+  fa: 'فارسی',
+  
+};
+
+// RTL languages
+export const rtlLocales = ['fa'];
+
+// Usage in layout
+<html lang={locale} dir={rtlLocales.includes(locale) ? 'rtl' : 'ltr'}>
+```
+
+### Translation File Structure
+```json
+// i18n/locales/en.json
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "projects": "Projects",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "Senior Frontend Developer",
+    "subtitle": "Building exceptional web experiences with modern technologies",
+    "cta_primary": "Hire Me",
+    "cta_secondary": "View Projects"
+  }
+}
+```
+
+---
+
+## Form Validation with Zod
+
+### Contact Form Schema
+```typescript
+import { z } from 'zod';
+
+export const contactSchema = z.object({
+  name: z.string()
+    .min(2, 'Name must be at least 2 characters')
+    .max(50, 'Name must be less than 50 characters'),
+  
+  email: z.string()
+    .email('Invalid email address')
+    .min(5, 'Email must be at least 5 characters'),
+  
+  subject: z.string()
+    .min(5, 'Subject must be at least 5 characters')
+    .max(100, 'Subject must be less than 100 characters'),
+  
+  message: z.string()
+    .min(20, 'Message must be at least 20 characters')
+    .max(1000, 'Message must be less than 1000 characters'),
+});
+
+export type ContactFormData = z.infer<typeof contactSchema>;
+```
+
+### Form Implementation
+```typescript
+'use client';
+
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { contactSchema, type ContactFormData } from '@/lib/schemas';
+
+export function ContactForm() {
+  const { register, handleSubmit, formState: { errors } } = useForm<ContactFormData>({
+    resolver: zodResolver(contactSchema)
+  });
+
+  const onSubmit = async (data: ContactFormData) => {
+    // Handle form submission
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      {/* Form fields */}
+    </form>
+  );
+}
+```
+
+---
+
+## Communication Style with Me
+
+### When I Ask You to Build Something
+
+**Step 1 - Confirm Understanding**
+- Briefly restate the task in 1-2 sentences
+- Ask clarifying questions ONLY if critical details are missing
+- Don't ask obvious questions
+
+**Step 2 - Show Implementation Plan**
+- Bullet list of files you'll create/modify
+- Key technical decisions
+- Estimated scope (small/medium/large)
+
+**Step 3 - Implement Fully**
+- Provide complete, working code
+- No placeholders like `// TODO: implement this`
+- No truncated code with `// ... rest of code`
+- Include all necessary imports
+
+**Step 4 - Explain Key Decisions**
+- Why you chose certain patterns
+- Performance considerations
+- Accessibility notes
+- Potential edge cases handled
+
+### Response Style Preferences
+
+**Keep responses:**
+- **Concise** - No lengthy preambles or apologies
+- **Actionable** - Show working code, not pseudo-code
+- **Specific** - Reference exact file paths (`src/components/Hero.tsx`)
+- **Expert-level** - Assume I understand React/Next.js fundamentals
+
+**Avoid:**
+- Over-explaining basic concepts
+- Excessive apologies ("I apologize for the confusion...")
+- Vague statements ("you might want to consider...")
+- Multiple alternative approaches (pick the best one)
+
+### When There's an Issue
+
+**Do:**
+- Identify the specific problem
+- Show the fixed code with clear diff markers
+- Explain what caused the issue briefly
+- Verify the fix addresses the root cause
+
+**Don't:**
+- Apologize repeatedly
+- Rewrite entire files for small fixes
+- Guess at what might be wrong
+
+---
+
+## Cursor Agent Mode Instructions
+
+### When Using Composer/Agent Mode
+
+**Best Practices:**
+- Make atomic changes (don't leave files half-done)
+- Create/modify multiple files in one go when needed
+- Run TypeScript compiler checks after changes
+- Test critical paths before marking complete
+
+**Multi-File Changes:**
+```
+Example prompt for Agent mode:
+"Implement the Projects section:
+1. Create src/components/sections/Projects.tsx
+2. Create src/components/shared/ProjectCard.tsx
+3. Add projects data to src/lib/constants.ts
+4. Update app/page.tsx to import Projects section
+
+Use glass card styling and stagger animations."
+```
+
+**When to Use Agent vs Chat:**
+- **Agent/Composer**: Multi-file features, refactoring, new sections
+- **Chat**: Questions, clarifications, small tweaks to single files
+
+---
+
+## Page-Specific Requirements
+
+### Homepage (app/page.tsx)
+- Hero section (full viewport height)
+- Featured projects grid (3 cards)
+- Skills preview (top 6 skills)
+- CTA section (contact + resume download)
+- All sections scroll-animated
+
+### About Page (app/about/page.tsx)
+- Professional photo/avatar
+- Bio paragraph (2-3 paragraphs)
+- Timeline (education + key career milestones)
+- Core values cards (4 values)
+- Tech stack visualization
+
+### Projects Page (app/projects/page.tsx)
+- Filter by technology (all/react/next/web3)
+- Grid layout (3 columns desktop, 1 mobile)
+- Modal for project details (click to expand)
+- GitHub + live demo links
+- Tech stack badges
+
+### Contact Page (app/contact/page.tsx)
+- Contact form (name, email, subject, message)
+- Real-time validation with Zod
+- Success/error toast notifications
+- Social links sidebar
+- Email: ali@alikiani.co (display prominently)
+
+---
+
+## SEO & Metadata Configuration
+
+### Root Layout Metadata
+```typescript
+// app/layout.tsx
+export const metadata: Metadata = {
+  title: {
+    default: 'Ali Kiani - Senior Frontend Developer',
+    template: '%s | Ali Kiani'
+  },
+  description: 'Senior Frontend Developer with 10+ years experience in React, Next.js, TypeScript, and modern web technologies. Specialized in performance optimization and AI integration.',
+  keywords: ['Frontend Developer', 'React', 'Next.js', 'TypeScript', 'Web3', 'AI Integration'],
+  authors: [{ name: 'Ali Kiani', url: 'https://alikiani.co' }],
+  creator: 'Ali Kiani',
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://alikiani.co',
+    title: 'Ali Kiani - Senior Frontend Developer',
+    description: 'Senior Frontend Developer specializing in React, Next.js, and modern web technologies',
+    siteName: 'Ali Kiani Portfolio',
+    images: [{
+      url: 'https://alikiani.co/og-image.png',
+      width: 1200,
+      height: 630,
+      alt: 'Ali Kiani Portfolio'
+    }]
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Ali Kiani - Senior Frontend Developer',
+    description: 'Senior Frontend Developer specializing in React, Next.js, and modern web technologies',
+    images: ['https://alikiani.co/og-image.png']
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1
+    }
+  }
+};
+```
+
+---
+
+## Testing Requirements
+
+### Unit Tests (Vitest + React Testing Library)
+```typescript
+// __tests__/components/Hero.test.tsx
+import { render, screen } from '@testing-library/react';
+import { Hero } from '@/components/sections/Hero';
+
+describe('Hero Component', () => {
+  it('renders hero title', () => {
+    render(<Hero />);
+    expect(screen.getByText(/Ali Kiani/i)).toBeInTheDocument();
+  });
+
+  it('displays CTA buttons', () => {
+    render(<Hero />);
+    expect(screen.getByRole('button', { name: /hire me/i })).toBeInTheDocument();
+  });
+});
+```
+
+### Accessibility Tests
+```typescript
+import { axe, toHaveNoViolations } from 'jest-axe';
+expect.extend(toHaveNoViolations);
+
+it('should not have accessibility violations', async () => {
+  const { container } = render(<Hero />);
+  const results = await axe(container);
+  expect(results).toHaveNoViolations();
+});
+```
+
+---
+
+## Deployment (Vercel)
+
+### Environment Variables
+```bash
+# .env.local
+NEXT_PUBLIC_SITE_URL=https://alikiani.co
+NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
+CONTACT_EMAIL_TO=ali@alikiani.co
+RESEND_API_KEY=re_xxxxxxxxxxxx
+```
+
+### Vercel Configuration
+```json
+// vercel.json
+{
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "outputDirectory": ".next"
+}
+```
+
+### Pre-Deployment Checklist
+- [ ] Run `npm run build` locally (no errors)
+- [ ] Test all pages in production mode
+- [ ] Verify all images load correctly
+- [ ] Test contact form submission
+- [ ] Check mobile responsiveness
+- [ ] Validate SEO metadata with tools
+- [ ] Test theme toggle persistence
+- [ ] Verify i18n switching works
+- [ ] Run Lighthouse audit (95+ score target)
+
+---
+
+## Performance Targets
+
+### Core Web Vitals
+- **LCP (Largest Contentful Paint):** < 2.5s
+- **FID (First Input Delay):** < 100ms
+- **CLS (Cumulative Layout Shift):** < 0.1
+
+### Lighthouse Scores (Minimum)
+- Performance: 95+
+- Accessibility: 100
+- Best Practices: 95+
+- SEO: 100
+
+### Optimization Checklist
+- [ ] Images optimized and properly sized
+- [ ] Fonts preloaded (Inter/Geist)
+- [ ] Critical CSS inlined
+- [ ] JavaScript code-split by route
+- [ ] Third-party scripts loaded async
+- [ ] Proper caching headers set
+- [ ] Gzip/Brotli compression enabled
+
+---
+
+## Revision & Iteration Strategy
+
+### When I Say "This Isn't Working"
+1. Ask what specifically isn't working (don't guess blindly)
+2. Review the exact code causing issues
+3. Provide targeted fix with clear explanation
+4. Show diff markers for changed code
+
+### When I Request Changes
+- Implement exactly what's requested
+- Don't add unrequested features
+- Maintain existing patterns and style
+- Test the change before responding
+
+### When Starting a New Feature
+- Reference existing code patterns
+- Maintain consistency with current implementation
+- Don't reinvent wheels (reuse components)
+- Follow the file structure above
+
+---
+
+## Final Reminders
+
+### Before Generating Any Code:
+1. Check if similar component already exists
+2. Verify it follows the design system colors/patterns
+3. Ensure TypeScript types are complete
+4. Add Framer Motion animations where appropriate
+5. Include accessibility attributes (ARIA)
+6. Mobile-first responsive design
+7. Performance optimization (lazy loading, memoization)
+
+### Quality Over Speed
+I value complete, correct implementations over quick responses. Take the time to:
+- Write proper TypeScript types
+- Add meaningful comments
+- Implement error handling
+- Consider edge cases
+- Test the code mentally before sharing
+
+### Stay in Context
+- Always refer to `.cursorrules` for standards
+- Maintain consistency across all files
+- Reference existing patterns in the codebase
+- Don't introduce conflicting styles or patterns
+
+---
+
+**You are now configured to build production-ready code for Ali Kiani's portfolio. Follow these rules strictly, and we'll create an exceptional website together.**
