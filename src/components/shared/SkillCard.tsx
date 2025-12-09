@@ -78,16 +78,16 @@ export function SkillCard({ skill, index = 0 }: SkillCardProps) {
     >
       {/* Icon */}
       <motion.div
-        className="flex items-center justify-center p-4 rounded-xl border-2 shadow-sm bg-accent-primary/10 border-accent-primary/30"
+        className="flex items-center justify-center p-4 rounded-xl border-2 shadow-sm bg-white/80 border-gray-200"
         whileHover={{
-          scale: 1.15,
+          scale: 1.1,
           boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)',
         }}
         transition={{ duration: 0.2 }}
       >
-        <div className="opacity-90">
+        <div className="flex items-center justify-center">
           {IconComponent ? (
-            <IconComponent className="w-12 h-12 text-accent-primary" />
+            <IconComponent className="w-12 h-12 transition-transform" />
           ) : (
             <Code className="w-12 h-12 text-accent-primary" />
           )}
