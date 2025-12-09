@@ -221,6 +221,9 @@ export function Contact() {
                   {errors.message && (
                     <p className="mt-1 text-sm text-red-600">{errors.message}</p>
                   )}
+                  <p className="mt-1 text-sm text-gray-500">
+                    {formData.message.length}/1000 characters
+                  </p>
                 </div>
 
                 {/* Success message */}
