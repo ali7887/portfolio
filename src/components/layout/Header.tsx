@@ -48,17 +48,21 @@ export function Header() {
         animate={{ y: 0 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
         className={cn(
-          'fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out',
-
-          /* ✨ Premium Glassmorphism */
-          'before:absolute before:inset-0 before:backdrop-blur-xl before:bg-white/10 before:border-b before:border-white/20 before:shadow-[0_8px_32px_rgba(31,38,135,0.1)] before:z-[-1]',
-
-          /* Height Changes based on scroll */
-          isScrolled ? 'py-3' : 'py-6'
+          'fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out',
+          isScrolled 
+            ? 'bg-white/60 backdrop-blur-xl backdrop-saturate-150 shadow-lg shadow-gray-200/50 border-b border-white/20' 
+            : 'bg-white/40 backdrop-blur-md border-b border-white/10'
         )}
+        style={{
+          backdropFilter: 'blur(16px) saturate(180%)',
+          WebkitBackdropFilter: 'blur(16px) saturate(180%)',
+        }}
       >
-        <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 md:h-20">
+        {/* Subtle inner glow */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent pointer-events-none" />
+        
+        <nav className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="flex items-center justify-between h-14 md:h-16">
 
             {/* Logo */}
             <Link
