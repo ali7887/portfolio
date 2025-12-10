@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, FormEvent, ChangeEvent } from 'react';
+import { useState, useCallback, FormEvent, ChangeEvent } from 'react';
 import { motion } from 'framer-motion';
 import { Send, Loader2 } from 'lucide-react';
 import emailjs from '@emailjs/browser';
@@ -44,19 +44,22 @@ export function Contact() {
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = useCallback((e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
     // Clear error when typing
-    if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: '' }));
-    }
+    setErrors(prev => {
+      if (prev[name]) {
+        return { ...prev, [name]: '' };
+      }
+      return prev;
+    });
     // Clear success/error messages when user types
-    if (submitSuccess) setSubmitSuccess(false);
-    if (submitError) setSubmitError(null);
-  };
+    setSubmitSuccess(false);
+    setSubmitError(null);
+  }, []);
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = useCallback(async (e: FormEvent) => {
     e.preventDefault();
     setErrors({});
     setSubmitError(null);
@@ -146,27 +149,27 @@ export function Contact() {
     } finally {
       setIsSubmitting(false);
     }
-  };
+  }, [formData]);
 
   return (
     <section
       id="contact"
-      className="py-20 px-4 sm:px-6 lg:px-8"
+      className="py-16 md:py-24 lg:py-32 px-6 sm:px-8"
       aria-label="Contact section"
     >
-      <div className="container mx-auto max-w-7xl">
+      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          className="text-center mb-12 md:mb-16 lg:mb-20"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight text-gray-900 mb-4 md:mb-6">
             Get in Touch
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
             Have a project in mind? Let&apos;s discuss how we can work together.
           </p>
         </motion.div>
@@ -180,15 +183,15 @@ export function Contact() {
           className="flex justify-center"
         >
           <motion.div variants={fadeInUp} className="w-full max-w-2xl">
-            <div className="bg-white rounded-xl border border-gray-200 p-6 md:p-8 shadow-sm">
-              <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="bg-white rounded-2xl border border-gray-200 p-6 md:p-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8">
                 {/* Name field */}
                 <div>
                   <label
                     htmlFor="name"
-                    className="block text-sm font-medium text-gray-700 mb-2"
+                    className="block text-sm md:text-base font-medium text-gray-700 mb-2 md:mb-3"
                   >
-                    Name <span className="text-red-500">*</span>
+                    Name <span className="text-red-600">*</span>
                   </label>
                   <input
                     type="text"
@@ -197,7 +200,7 @@ export function Contact() {
                     value={formData.name}
                     onChange={handleChange}
                     className={cn(
-                      'w-full px-4 py-3 border border-gray-300 rounded-lg',
+                      'w-full px-4 md:px-5 py-3 md:py-4 border border-gray-300 rounded-lg',
                       'focus:ring-2 focus:ring-accent-primary focus:border-transparent',
                       'transition-colors',
                       errors.name && 'border-red-500 focus:ring-red-500'
@@ -213,9 +216,9 @@ export function Contact() {
                 <div>
                   <label
                     htmlFor="email"
-                    className="block text-sm font-medium text-gray-700 mb-2"
+                    className="block text-sm md:text-base font-medium text-gray-700 mb-2 md:mb-3"
                   >
-                    Email <span className="text-red-500">*</span>
+                    Email <span className="text-red-600">*</span>
                   </label>
                   <input
                     type="email"
@@ -224,7 +227,7 @@ export function Contact() {
                     value={formData.email}
                     onChange={handleChange}
                     className={cn(
-                      'w-full px-4 py-3 border border-gray-300 rounded-lg',
+                      'w-full px-4 md:px-5 py-3 md:py-4 border border-gray-300 rounded-lg',
                       'focus:ring-2 focus:ring-accent-primary focus:border-transparent',
                       'transition-colors',
                       errors.email && 'border-red-500 focus:ring-red-500'
@@ -240,9 +243,9 @@ export function Contact() {
                 <div>
                   <label
                     htmlFor="subject"
-                    className="block text-sm font-medium text-gray-700 mb-2"
+                    className="block text-sm md:text-base font-medium text-gray-700 mb-2 md:mb-3"
                   >
-                    Subject <span className="text-red-500">*</span>
+                    Subject <span className="text-red-600">*</span>
                   </label>
                   <input
                     type="text"
@@ -251,7 +254,7 @@ export function Contact() {
                     value={formData.subject}
                     onChange={handleChange}
                     className={cn(
-                      'w-full px-4 py-3 border border-gray-300 rounded-lg',
+                      'w-full px-4 md:px-5 py-3 md:py-4 border border-gray-300 rounded-lg',
                       'focus:ring-2 focus:ring-accent-primary focus:border-transparent',
                       'transition-colors',
                       errors.subject && 'border-red-500 focus:ring-red-500'
@@ -267,9 +270,9 @@ export function Contact() {
                 <div>
                   <label
                     htmlFor="message"
-                    className="block text-sm font-medium text-gray-700 mb-2"
+                    className="block text-sm md:text-base font-medium text-gray-700 mb-2 md:mb-3"
                   >
-                    Message <span className="text-red-500">*</span>
+                    Message <span className="text-red-600">*</span>
                   </label>
                   <textarea
                     id="message"
@@ -298,7 +301,7 @@ export function Contact() {
                   <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="p-4 rounded-lg bg-green-500/20 border border-green-500/50 text-green-600"
+                    className="p-4 rounded-xl bg-green-50 border border-green-200 text-green-700 shadow-sm"
                   >
                     Message sent successfully! I&apos;ll get back to you soon.
                   </motion.div>
@@ -309,7 +312,7 @@ export function Contact() {
                   <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="p-4 rounded-lg bg-red-500/20 border border-red-500/50 text-red-600"
+                    className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 shadow-sm"
                   >
                     {submitError}
                   </motion.div>
@@ -322,9 +325,11 @@ export function Contact() {
                   whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
                   whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
                   className={cn(
-                    'w-full px-8 py-3 bg-accent-primary text-white rounded-lg font-semibold',
-                    'hover:bg-accent-secondary transition-colors',
-                    'disabled:opacity-50 disabled:cursor-not-allowed',
+                    'w-full px-6 md:px-8 py-3 md:py-4 bg-accent-primary hover:bg-accent-secondary active:bg-accent-primary/90 text-white rounded-xl font-semibold',
+                    'shadow-md hover:shadow-lg active:shadow-sm',
+                    'transform hover:-translate-y-0.5 active:translate-y-0',
+                    'transition-all duration-200',
+                    'disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none',
                     'flex items-center justify-center gap-2',
                     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary'
                   )}

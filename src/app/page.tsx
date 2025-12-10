@@ -5,32 +5,48 @@ import { ScrollToTop } from '@/components/shared/ScrollToTop';
 import { Hero } from '@/components/sections/Hero';
 import { AboutIntro } from '@/components/sections/AboutIntro';
 
-// Lazy load heavy sections
+// Lazy load heavy sections with optimized loading states
 const Skills = dynamic(
   () => import('@/components/sections/Skills').then(mod => ({ default: mod.Skills })),
   {
-    loading: () => <div className="py-20 text-center text-gray-600">Loading...</div>,
+    loading: () => (
+      <div className="py-20 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent-primary" />
+      </div>
+    ),
   }
 );
 
 const Projects = dynamic(
   () => import('@/components/sections/Projects').then(mod => ({ default: mod.Projects })),
   {
-    loading: () => <div className="py-20 text-center text-gray-600">Loading...</div>,
+    loading: () => (
+      <div className="py-20 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent-primary" />
+      </div>
+    ),
   }
 );
 
 const Experience = dynamic(
   () => import('@/components/sections/Experience').then(mod => ({ default: mod.Experience })),
   {
-    loading: () => <div className="py-20 text-center text-gray-600">Loading...</div>,
+    loading: () => (
+      <div className="py-20 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent-primary" />
+      </div>
+    ),
   }
 );
 
 const Contact = dynamic(
   () => import('@/components/sections/Contact').then(mod => ({ default: mod.Contact })),
   {
-    loading: () => <div className="py-20 text-center text-gray-600">Loading...</div>,
+    loading: () => (
+      <div className="py-20 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent-primary" />
+      </div>
+    ),
   }
 );
 

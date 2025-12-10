@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ArrowRight } from 'lucide-react';
@@ -37,20 +37,25 @@ export function Projects({ showFilters = true, limit }: ProjectsProps) {
   }, [selectedFilter]);
 
   // Apply limit if provided
-  const displayedProjects = limit
-    ? filteredProjects.slice(0, limit)
-    : filteredProjects;
+  const displayedProjects = useMemo(
+    () => (limit ? filteredProjects.slice(0, limit) : filteredProjects),
+    [filteredProjects, limit]
+  );
 
-  const handleProjectClick = (project: Project) => {
+  const handleProjectClick = useCallback((project: Project) => {
     setSelectedProject(project);
     // Prevent body scroll when modal is open
     document.body.style.overflow = 'hidden';
-  };
+  }, []);
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     setSelectedProject(null);
     document.body.style.overflow = 'unset';
-  };
+  }, []);
+
+  const handleFilterChange = useCallback((value: string) => {
+    setSelectedFilter(value);
+  }, []);
 
   // Filter options
   const filterOptions = [
@@ -64,22 +69,22 @@ export function Projects({ showFilters = true, limit }: ProjectsProps) {
   return (
     <section
       id="projects"
-      className="py-20 px-4 sm:px-6 lg:px-8"
+      className="py-16 md:py-24 lg:py-32 px-6 sm:px-8"
       aria-label="Projects section"
     >
-      <div className="container mx-auto max-w-7xl">
+      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          className="text-center mb-12 md:mb-16 lg:mb-20"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight text-gray-900 mb-4 md:mb-6">
             Featured Projects
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
             A collection of projects showcasing modern web development
             practices and technologies.
           </p>
@@ -92,19 +97,21 @@ export function Projects({ showFilters = true, limit }: ProjectsProps) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="flex flex-wrap justify-center gap-3 mb-12"
+            className="flex flex-wrap justify-center gap-3 md:gap-4 mb-12 md:mb-16"
           >
             {filterOptions.map((option) => (
               <button
                 key={option.value}
                 type="button"
-                onClick={() => setSelectedFilter(option.value)}
+                onClick={() => handleFilterChange(option.value)}
                 className={cn(
-                  'px-4 py-2 rounded-lg text-sm font-medium transition-all',
-                  'glass-card',
+                  'px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200',
+                  'bg-white border border-gray-200',
+                  'shadow-sm hover:shadow-md',
+                  'transform hover:-translate-y-0.5 active:translate-y-0',
                   selectedFilter === option.value
-                    ? 'bg-accent-primary/20 text-accent-neon border-accent-primary/50'
-                    : 'text-text-secondary hover:text-text-primary hover:bg-white/[0.06]',
+                    ? 'bg-accent-primary/20 text-accent-primary border-accent-primary/50 shadow-md'
+                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50',
                   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary'
                 )}
                 aria-pressed={selectedFilter === option.value}
@@ -124,7 +131,7 @@ export function Projects({ showFilters = true, limit }: ProjectsProps) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10 will-change-contents"
             >
               {displayedProjects.map((project, index) => (
                 <ProjectCard
@@ -141,7 +148,7 @@ export function Projects({ showFilters = true, limit }: ProjectsProps) {
               animate={{ opacity: 1 }}
               className="glass-card p-12 text-center"
             >
-              <p className="text-text-secondary">
+              <p className="text-gray-600">
                 No projects found for this filter.
               </p>
             </motion.div>
@@ -155,15 +162,17 @@ export function Projects({ showFilters = true, limit }: ProjectsProps) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-center mt-8"
+            className="text-center mt-10 md:mt-12"
           >
             <Link
               href="/projects"
               className={cn(
-                'px-8 py-3 rounded-lg',
-                'inline-flex items-center gap-2',
-                'bg-accent-primary text-white font-semibold',
-                'hover:bg-accent-secondary transition-colors',
+                'px-6 md:px-8 py-3 md:py-4 rounded-xl',
+                'inline-flex items-center gap-2 md:gap-3',
+                'bg-accent-primary hover:bg-accent-secondary active:bg-accent-primary/90 text-white text-base md:text-lg font-semibold tracking-wide',
+                'shadow-md hover:shadow-lg active:shadow-sm',
+                'transform hover:-translate-y-0.5 active:translate-y-0',
+                'transition-all duration-200',
                 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary'
               )}
             >
@@ -206,7 +215,7 @@ export function Projects({ showFilters = true, limit }: ProjectsProps) {
                     <div className="flex items-center gap-3 mb-2">
                       <h3
                         id="project-modal-title"
-                        className="text-2xl md:text-3xl font-bold text-gray-900"
+                        className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight leading-tight text-gray-900"
                       >
                         {selectedProject.title}
                       </h3>
@@ -238,7 +247,7 @@ export function Projects({ showFilters = true, limit }: ProjectsProps) {
                   variants={fadeInUp}
                   initial="hidden"
                   animate="visible"
-                  className="space-y-6"
+                  className="space-y-6 md:space-y-8"
                 >
                   {/* Description */}
                   <p className="text-gray-600 leading-relaxed">
@@ -247,7 +256,7 @@ export function Projects({ showFilters = true, limit }: ProjectsProps) {
 
                   {/* Tech stack */}
                   <div>
-                    <h4 className="text-sm font-semibold text-gray-900 mb-3">
+                    <h4 className="text-sm md:text-base font-semibold text-gray-900 mb-3 tracking-tight">
                       Tech Stack
                     </h4>
                     <div className="flex flex-wrap gap-2">
@@ -263,7 +272,7 @@ export function Projects({ showFilters = true, limit }: ProjectsProps) {
                   </div>
 
                   {/* Action buttons */}
-                  <div className="flex flex-col sm:flex-row gap-3 pt-4">
+                  <div className="flex flex-col sm:flex-row gap-3 md:gap-4 pt-6 md:pt-8">
                     {selectedProject.github && (
                       <motion.a
                         href={selectedProject.github}
@@ -272,9 +281,12 @@ export function Projects({ showFilters = true, limit }: ProjectsProps) {
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         className={cn(
-                          'flex items-center justify-center gap-2 px-6 py-3 rounded-lg',
-                          'bg-gray-100 text-gray-700 text-sm font-medium',
-                          'hover:bg-gray-200 transition-colors',
+                          'flex items-center justify-center gap-2 px-6 py-3 rounded-xl',
+                          'bg-gray-100 text-gray-700 text-sm md:text-base font-semibold tracking-wide',
+                          'hover:bg-gray-200',
+                          'shadow-sm hover:shadow-md',
+                          'transform hover:-translate-y-0.5 active:translate-y-0',
+                          'transition-all duration-200',
                           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary'
                         )}
                       >
@@ -290,9 +302,11 @@ export function Projects({ showFilters = true, limit }: ProjectsProps) {
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         className={cn(
-                          'flex items-center justify-center gap-2 px-6 py-3 rounded-lg',
-                          'bg-accent-primary text-white text-sm font-medium',
-                          'hover:bg-accent-secondary transition-colors',
+                          'flex items-center justify-center gap-2 px-6 py-3 rounded-xl',
+                          'bg-accent-primary hover:bg-accent-secondary active:bg-accent-primary/90 text-white text-sm md:text-base font-semibold tracking-wide',
+                          'shadow-md hover:shadow-lg active:shadow-sm',
+                          'transform hover:-translate-y-0.5 active:translate-y-0',
+                          'transition-all duration-200',
                           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary'
                         )}
                       >

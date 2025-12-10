@@ -1,5 +1,6 @@
 'use client';
 
+import { memo } from 'react';
 import { motion } from 'framer-motion';
 import {
   SiReact,
@@ -85,7 +86,7 @@ const iconColors: Record<string, string> = {
  * SkillCard - Simple card component for displaying skill names with brand icons
  * Features glass card styling with hover effects and animations
  */
-export function SkillCard({ skill, index = 0 }: SkillCardProps) {
+export const SkillCard = memo(function SkillCard({ skill, index = 0 }: SkillCardProps) {
   const IconComponent = skill.iconName ? iconMap[skill.iconName] : null;
   const iconColor = skill.iconName ? iconColors[skill.iconName] : '#0284C7';
 
@@ -97,22 +98,27 @@ export function SkillCard({ skill, index = 0 }: SkillCardProps) {
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.4, delay: index * 0.1 }}
       whileHover={{
-        y: -8,
-        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 229, 255, 0.2)',
-        transition: { duration: 0.2 },
+        y: -4,
+        transition: { duration: 0.3 },
       }}
       className={cn(
-        'glass-card-hover p-6 text-center',
+        'bg-white rounded-xl p-6 md:p-8 text-center',
+        'border border-gray-200',
+        'shadow-sm hover:shadow-lg',
+        'transition-all duration-300',
+        'hover:-translate-y-1',
+        'group',
         'cursor-default',
-        'flex flex-col items-center gap-4',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-primary'
+        'flex flex-col items-center gap-4 md:gap-6',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-primary',
+        'will-change-transform'
       )}
     >
       {/* Icon */}
       <motion.div
-        className="flex items-center justify-center p-4 rounded-xl border-2 shadow-sm bg-white/80 border-gray-200"
+        className="flex items-center justify-center p-4 md:p-5 rounded-xl border-2 shadow-sm bg-white/80 border-gray-200 mb-2 md:mb-3 transform group-hover:scale-110 transition-transform duration-300"
         whileHover={{
-          scale: 1.1,
+          scale: 1.15,
           boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)',
         }}
         transition={{ duration: 0.2 }}
@@ -133,8 +139,8 @@ export function SkillCard({ skill, index = 0 }: SkillCardProps) {
       </motion.div>
 
       {/* Skill name */}
-      <span className="text-lg font-semibold text-text-primary">{skill.name}</span>
+      <span className="text-lg md:text-xl font-semibold tracking-tight text-gray-900 group-hover:text-accent-primary transition-colors duration-300">{skill.name}</span>
     </motion.div>
   );
-}
+});
 

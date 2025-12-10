@@ -30,7 +30,7 @@ export default function ProjectsPage() {
           className="container mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-4"
           aria-label="Breadcrumb"
         >
-          <ol className="flex items-center gap-2 text-sm text-text-secondary">
+          <ol className="flex items-center gap-2 text-sm text-gray-600">
             <li>
               <Link
                 href="/"
@@ -44,7 +44,7 @@ export default function ProjectsPage() {
               <ChevronRight className="w-4 h-4" />
             </li>
             <li>
-              <span className="text-text-primary font-medium">Projects</span>
+              <span className="text-gray-900 font-medium">Projects</span>
             </li>
           </ol>
         </nav>

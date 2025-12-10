@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { memo, useEffect, useRef } from 'react';
 import { motion, useInView, useMotionValue, useSpring } from 'framer-motion';
 import { Calendar, FolderKanban, Code2, Heart } from 'lucide-react';
 import { fadeInUp, staggerContainer } from '@/lib/animations';
@@ -48,7 +48,7 @@ const stats: StatItem[] = [
 /**
  * AnimatedCounter - Counter component with smooth count-up animation
  */
-function AnimatedCounter({
+const AnimatedCounter = memo(function AnimatedCounter({
   value,
   suffix,
 }: {
@@ -83,7 +83,7 @@ function AnimatedCounter({
       {suffix}
     </span>
   );
-}
+});
 
 /**
  * Stats - Animated statistics section
@@ -98,7 +98,7 @@ export function Stats() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-6"
+          className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 lg:gap-10"
         >
           {stats.map((stat) => {
             const Icon = stat.icon;
@@ -107,14 +107,14 @@ export function Stats() {
                 key={stat.label}
                 variants={fadeInUp}
                 whileHover={{ y: -4, scale: 1.02 }}
-                className="glass-card p-6 text-center"
+                className="bg-white rounded-xl p-6 text-center border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 will-change-transform"
               >
                 <div className="flex flex-col items-center gap-4">
                   {/* Icon */}
                   <motion.div
                     whileHover={{ rotate: 360 }}
                     transition={{ duration: 0.6 }}
-                    className={cn('glass-card p-3 rounded-lg', stat.color)}
+                    className={cn('bg-white/80 backdrop-blur-sm p-3 rounded-lg border border-gray-200 shadow-sm', stat.color)}
                   >
                     <Icon className="w-6 h-6" />
                   </motion.div>
@@ -125,7 +125,7 @@ export function Stats() {
                   </div>
 
                   {/* Label */}
-                  <p className="text-sm text-text-secondary font-medium">{stat.label}</p>
+                  <p className="text-sm text-gray-600 font-medium">{stat.label}</p>
                 </div>
               </motion.div>
             );
