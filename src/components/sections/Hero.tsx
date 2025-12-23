@@ -77,7 +77,7 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
             className="text-xl md:text-2xl lg:text-3xl font-medium text-blue-600 tracking-wide mb-4"
           >
-            Senior Frontend Developer
+            Creative Developer & Designer
           </motion.p>
 
           {/* Description */}
