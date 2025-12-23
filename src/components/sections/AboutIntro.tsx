@@ -59,7 +59,7 @@ export function AboutIntro() {
                 </p>
 
                 <p className="text-base leading-relaxed text-gray-700 md:text-lg">
-                  My expertise spans across React, Next.js, TypeScript, and
+                  My expertise spans across Next.js, React.js, TypeScript, and
                   modern web development practices. Currently{" "}
                   <span className="text-accent-primary">
                     {PERSONAL_INFO.location}
