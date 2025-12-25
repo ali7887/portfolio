@@ -57,7 +57,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
       </div>
 
       {/* Loading Bar */}
-      <div className="mt-12 h-[2px] w-[200px] overflow-hidden rounded bg-gray-700">
+      <div className="mt-50 h-[3px] w-[280px] overflow-hidden rounded bg-gray-700">
         <div
           className="h-full animate-pulse bg-blue-500 shadow-lg shadow-blue-500"
           style={{

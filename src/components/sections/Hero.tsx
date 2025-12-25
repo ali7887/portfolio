@@ -88,7 +88,7 @@ export function Hero() {
             className="text-base md:text-lg lg:text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto mb-8"
           >
             Building exceptional web experiences with modern technologies.
-            Specializing in Next.js, React.js,  and performance optimization.
+            Specializing in Next.js, React.js, and performance optimization.
           </motion.p>
 
           {/* CTA Buttons */}
