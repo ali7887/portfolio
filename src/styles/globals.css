@@ -203,11 +203,17 @@
   }
 }
 
-/* Light Mode Header */
+/* Glassmorphism header support */
+@supports not (backdrop-filter: blur(10px)) {
+  header {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+  }
+}
+
+/* Enhanced glass effect */
 header {
-  background: rgba(255, 255, 255, 0.95) !important;
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid #E2E8F0 !important;
+  -webkit-backdrop-filter: blur(24px) saturate(200%);
+  backdrop-filter: blur(24px) saturate(200%);
 }
 
 nav a {

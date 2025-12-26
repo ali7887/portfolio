@@ -2,15 +2,14 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Github, Linkedin, Instagram, Twitter, Mail } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const navLinks = [
-  { name: 'Home', href: '/' },
-  { name: 'Projects', href: '/projects' },
-  { name: 'Contact', href: '#contact' },
+  { id: 'home', name: 'Home', href: '#home' },
+  { id: 'projects', name: 'Projects', href: '#projects' },
+  { id: 'contact', name: 'Contact', href: '#contact' },
 ];
 
 const socialLinks = [
@@ -24,18 +23,64 @@ const socialLinks = [
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const pathname = usePathname();
+  const [activeSection, setActiveSection] = useState('home');
 
-  /* Scroll detection */
+  /* Scroll detection for header style */
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => {
+      // Trigger at 10px scroll (very sensitive)
+      setIsScrolled(window.scrollY > 10);
+    };
+    
+    // Check immediately
+    handleScroll();
+    
+    // Listen to scroll with passive for performance
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  /* Lock body scroll on mobile menu */
+  /* Active section detection based on scroll position */
   useEffect(() => {
-    document.body.style.overflow = isOpen ? 'hidden' : 'unset';
+    const sections = ['home', 'about', 'skills', 'projects', 'experience', 'contact'];
+    
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + 100; // Offset for header height
+      
+      // Find which section is currently in view
+      for (const sectionId of sections) {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          const { offsetTop, offsetHeight } = element;
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(sectionId);
+            break;
+          }
+        }
+      }
+    };
+    
+    handleScroll(); // Check immediately
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  /* Lock body scroll on mobile menu and handle escape key */
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsOpen(false);
+    };
+    
+    if (isOpen) {
+      document.addEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'hidden';
+    }
+    
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'unset';
+    };
   }, [isOpen]);
 
   const closeMenu = () => setIsOpen(false);
@@ -50,27 +95,40 @@ export function Header() {
         className={cn(
           'fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out',
           isScrolled 
-            ? 'bg-white/60 backdrop-blur-xl backdrop-saturate-150 shadow-lg shadow-gray-200/50 border-b border-white/20' 
-            : 'bg-white/40 backdrop-blur-md border-b border-white/10'
+            ? 'bg-white/30 backdrop-blur-2xl backdrop-saturate-200 shadow-xl shadow-black/5 border-b border-white/40' 
+            : 'bg-white/20 backdrop-blur-xl backdrop-saturate-150 border-b border-white/20'
         )}
         style={{
-          backdropFilter: 'blur(16px) saturate(180%)',
-          WebkitBackdropFilter: 'blur(16px) saturate(180%)',
+          backdropFilter: isScrolled 
+            ? 'blur(24px) saturate(200%) brightness(110%)' 
+            : 'blur(16px) saturate(150%)',
+          WebkitBackdropFilter: isScrolled 
+            ? 'blur(24px) saturate(200%) brightness(110%)' 
+            : 'blur(16px) saturate(150%)',
         }}
       >
-        {/* Subtle inner glow */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent pointer-events-none" />
+        {/* Glass overlay for enhanced effect */}
+        <div 
+          className="absolute inset-0 bg-gradient-to-b from-white/20 via-white/10 to-transparent pointer-events-none"
+          style={{
+            backdropFilter: 'blur(1px)',
+            WebkitBackdropFilter: 'blur(1px)',
+          }}
+        />
         
         <nav className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="flex items-center justify-between h-14 md:h-16">
+          <div className="flex items-center justify-between h-16 md:h-20">
 
             {/* Logo */}
             <Link
               href="/"
               className={cn(
-                'font-bold text-gradient-primary transition-all duration-500 hover:opacity-80',
-                isScrolled ? 'text-lg' : 'text-2xl'
+                'font-bold text-blue-600 transition-all duration-500 hover:text-blue-700',
+                isScrolled ? 'text-lg' : 'text-xl md:text-2xl'
               )}
+              style={{
+                textShadow: '0 2px 4px rgba(255, 255, 255, 0.9)',
+              }}
               aria-label="Ali Kiani - Home"
             >
               Ali Kiani
@@ -79,42 +137,42 @@ export function Header() {
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-6 md:gap-8 lg:gap-10">
               {navLinks.map((link) => {
-                const isActive =
-                  pathname === link.href || (link.href.startsWith('#') && pathname === '/');
+                const isActive = activeSection === link.id;
 
                 return (
                   <Link
-                    key={link.href}
+                    key={link.id}
                     href={link.href}
                     onClick={(e) => {
-                      if (link.href.startsWith('#')) {
-                        e.preventDefault();
-                        const element = document.querySelector(link.href);
-                        if (element) {
-                          const headerOffset = isScrolled ? 60 : 90;
-                          const elementPosition = element.getBoundingClientRect().top;
-                          const offset = elementPosition + window.pageYOffset - headerOffset;
-                          window.scrollTo({ top: offset, behavior: 'smooth' });
-                        }
+                      e.preventDefault();
+                      const element = document.querySelector(link.href);
+                      if (element) {
+                        const headerOffset = isScrolled ? 60 : 90;
+                        const elementPosition = element.getBoundingClientRect().top;
+                        const offset = elementPosition + window.pageYOffset - headerOffset;
+                        window.scrollTo({ top: offset, behavior: 'smooth' });
                       }
                     }}
                     className={cn(
-                      'relative font-medium transition-all duration-500 tracking-wide',
+                      'relative font-medium transition-all duration-200 tracking-wide pb-1',
                       isScrolled ? 'text-sm' : 'text-sm md:text-base',
                       isActive
-                        ? 'text-accent-primary'
-                        : 'text-gray-700 hover:text-accent-primary'
+                        ? 'text-blue-600'
+                        : 'text-gray-900 hover:text-blue-600'
                     )}
+                    style={{
+                      textShadow: '0 1px 3px rgba(255, 255, 255, 0.8)',
+                    }}
                   >
                     {link.name}
-                    {isActive && (
-                      <motion.div
-                        layoutId="activeIndicator"
-                        className="absolute -bottom-1 left-0 right-0 h-0.5 bg-accent-primary"
-                        initial={false}
-                        transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                      />
-                    )}
+                    <span
+                      className={cn(
+                        'absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 transition-all duration-200',
+                        isActive
+                          ? 'opacity-100 scale-x-100'
+                          : 'opacity-0 scale-x-0'
+                      )}
+                    />
                   </Link>
                 );
               })}
@@ -133,12 +191,15 @@ export function Header() {
                     rel="noopener noreferrer"
                     aria-label={link.name}
                     className={cn(
-                      'rounded-lg hidden sm:flex hover:bg-gray-100 transition-all duration-200 text-gray-700 hover:text-accent-primary',
+                      'rounded-lg hidden sm:flex hover:bg-white/50 transition-all duration-200 text-gray-900 hover:text-blue-600',
                       'p-2 md:p-3',
                       'shadow-sm hover:shadow-md',
                       'transform hover:scale-110 active:scale-95',
                       isScrolled ? 'p-1.5' : 'p-2'
                     )}
+                    style={{
+                      textShadow: '0 1px 2px rgba(255, 255, 255, 0.8)',
+                    }}
                   >
                     <Icon className={cn(
                       'transition-all duration-500',
@@ -154,9 +215,16 @@ export function Header() {
                 onClick={() => setIsOpen(!isOpen)}
                 aria-label="Toggle menu"
                 aria-expanded={isOpen}
-                className="p-2 md:p-3 rounded-lg bg-white border border-gray-200 shadow-sm hover:shadow-md hover:bg-gray-100 transition-all duration-200 hover:scale-110 active:scale-95 md:hidden"
+                className="md:hidden p-2 text-gray-900 hover:text-blue-600 transition-colors relative z-50"
+                style={{
+                  textShadow: '0 1px 3px rgba(255, 255, 255, 0.8)',
+                }}
               >
-                <Menu className="w-6 h-6 text-gray-900" />
+                {isOpen ? (
+                  <X className="w-6 h-6" />
+                ) : (
+                  <Menu className="w-6 h-6" />
+                )}
               </button>
             </div>
 
@@ -168,44 +236,72 @@ export function Header() {
       <AnimatePresence>
         {isOpen && (
           <>
-            {/* Overlay */}
+            {/* Glassmorphic Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={closeMenu}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden"
+              className="fixed inset-0 z-40 md:hidden transition-all duration-300"
+              style={{
+                backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                backdropFilter: 'blur(4px)',
+                WebkitBackdropFilter: 'blur(4px)',
+              }}
+              aria-hidden="true"
             />
 
-            {/* Drawer */}
+            {/* Glassmorphic Drawer */}
             <motion.div
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 24, stiffness: 190 }}
-              className="fixed top-0 right-0 bottom-0 w-3/4 max-w-sm bg-white z-50 shadow-2xl md:hidden"
+              className={cn(
+                'fixed top-0 right-0 bottom-0 z-50 md:hidden',
+                'w-[280px] sm:w-[320px]',
+                'bg-white/25 backdrop-blur-2xl backdrop-saturate-200',
+                'border-l border-white/40',
+                'shadow-2xl shadow-black/10'
+              )}
+              style={{
+                backdropFilter: 'blur(24px) saturate(200%) brightness(110%)',
+                WebkitBackdropFilter: 'blur(24px) saturate(200%) brightness(110%)',
+              }}
             >
+              {/* Glass overlay */}
+              <div 
+                className="absolute inset-0 bg-gradient-to-b from-white/20 via-white/10 to-transparent pointer-events-none"
+                style={{
+                  backdropFilter: 'blur(1px)',
+                  WebkitBackdropFilter: 'blur(1px)',
+                }}
+              />
+              
               {/* Close Button */}
               <motion.button
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ delay: 0.1 }}
                 onClick={closeMenu}
-                className="absolute top-6 right-6 w-12 h-12 bg-accent-primary hover:bg-accent-secondary active:bg-accent-primary/90 text-white rounded-xl flex items-center justify-center shadow-md hover:shadow-lg active:shadow-sm transform hover:scale-110 active:scale-95 transition-all duration-200"
+                className="absolute top-6 right-6 w-10 h-10 bg-white/30 hover:bg-white/50 backdrop-blur-sm text-gray-900 rounded-xl flex items-center justify-center shadow-md hover:shadow-lg active:shadow-sm transform hover:scale-110 active:scale-95 transition-all duration-200 z-20"
+                style={{
+                  textShadow: '0 1px 3px rgba(255, 255, 255, 0.9)',
+                }}
                 aria-label="Close menu"
               >
-                <X className="w-6 h-6" />
+                <X className="w-5 h-5" />
               </motion.button>
 
               {/* Drawer Content */}
-              <nav className="pt-24 px-6 pb-6">
-                <ul className="space-y-3 md:space-y-4 mb-8 md:mb-10">
+              <nav className="relative z-10 h-full flex flex-col pt-24 px-6 pb-6">
+                <ul className="space-y-2 mb-8">
                   {navLinks.map((link, index) => {
-                    const isActive = pathname === link.href;
+                    const isActive = activeSection === link.id;
 
                     return (
                       <motion.li
-                        key={link.href}
+                        key={link.id}
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: index * 0.1 }}
@@ -213,19 +309,25 @@ export function Header() {
                         <Link
                           href={link.href}
                           onClick={(e) => {
+                            e.preventDefault();
                             closeMenu();
-                            if (link.href.startsWith('#')) {
-                              e.preventDefault();
-                              const el = document.querySelector(link.href);
-                              el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            const el = document.querySelector(link.href);
+                            if (el) {
+                              const headerOffset = 80;
+                              const elementPosition = el.getBoundingClientRect().top;
+                              const offset = elementPosition + window.pageYOffset - headerOffset;
+                              window.scrollTo({ top: offset, behavior: 'smooth' });
                             }
                           }}
                           className={cn(
-                            'block py-4 px-4 text-base md:text-lg font-semibold tracking-wide rounded-lg transition-colors',
+                            'block py-3 px-4 text-base font-medium tracking-wide rounded-lg transition-all',
                             isActive
-                              ? 'bg-accent-primary/10 text-accent-primary border-2 border-accent-primary/30'
-                              : 'text-gray-900 hover:bg-gray-100'
+                              ? 'bg-white/40 text-blue-600 ring-2 ring-blue-400/50'
+                              : 'text-gray-900 hover:text-blue-600 hover:bg-white/30'
                           )}
+                          style={{
+                            textShadow: '0 1px 3px rgba(255, 255, 255, 0.9)',
+                          }}
                         >
                           {link.name}
                         </Link>
@@ -235,9 +337,11 @@ export function Header() {
                 </ul>
 
                 {/* Social Links */}
-                <div className="pt-6 border-t border-gray-200">
-                  <p className="text-sm md:text-base font-medium text-gray-500 mb-4">Connect</p>
-                  <div className="grid grid-cols-5 gap-3">
+                <div className="mt-auto pt-6 border-t border-white/40">
+                  <p className="text-sm font-medium text-gray-900 mb-4" style={{ textShadow: '0 1px 3px rgba(255, 255, 255, 0.9)' }}>
+                    Connect
+                  </p>
+                  <div className="flex items-center justify-center gap-4">
                     {socialLinks.map((link) => {
                       const Icon = link.icon;
                       return (
@@ -250,7 +354,10 @@ export function Header() {
                           initial={{ opacity: 0, scale: 0.8 }}
                           animate={{ opacity: 1, scale: 1 }}
                           transition={{ delay: navLinks.length * 0.1 }}
-                          className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center hover:bg-accent-primary hover:text-white transition-colors"
+                          className="w-10 h-10 bg-white/30 hover:bg-white/50 backdrop-blur-sm rounded-lg flex items-center justify-center text-gray-900 hover:text-blue-600 transition-all shadow-sm hover:shadow-md"
+                          style={{
+                            textShadow: '0 1px 2px rgba(255, 255, 255, 0.8)',
+                          }}
                         >
                           <Icon className="w-5 h-5" />
                         </motion.a>
