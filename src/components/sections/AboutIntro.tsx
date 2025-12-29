@@ -13,12 +13,12 @@ export function AboutIntro() {
   return (
     <section
       id="about"
-      className="px-6 py-16 sm:px-8 md:py-24 lg:py-32"
+      className="px-6 py-12 sm:px-8 md:py-16 lg:py-20"
       aria-label="About section"
     >
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <RevealOnScroll>
-          <h2 className="mb-4 text-center text-3xl font-bold leading-tight tracking-tight text-gray-900 md:mb-6 md:text-4xl lg:text-5xl">
+          <h2 className="mb-3 text-center text-2xl font-bold leading-tight tracking-tight text-gray-900 md:mb-4 md:text-3xl lg:text-4xl">
             About Me
           </h2>
         </RevealOnScroll>

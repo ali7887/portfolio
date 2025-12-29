@@ -25,7 +25,7 @@ export function Experience() {
   return (
     <section
       id="experience"
-      className="px-6 py-16 sm:px-8 md:py-24 lg:py-32"
+      className="px-6 py-12 sm:px-8 md:py-16 lg:py-20"
       aria-label="Work Experience section"
     >
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -38,10 +38,10 @@ export function Experience() {
             transition={{ duration: 0.6 }}
             className="mb-12 text-center md:mb-16 lg:mb-20"
           >
-            <h2 className="mb-4 text-3xl font-bold leading-tight tracking-tight text-gray-900 md:mb-6 md:text-4xl lg:text-5xl">
+            <h2 className="mb-3 text-2xl font-bold leading-tight tracking-tight text-gray-900 md:mb-4 md:text-3xl lg:text-4xl">
               Work Experience
             </h2>
-            <p className="mx-auto max-w-3xl text-lg leading-relaxed text-gray-600 md:text-xl">
+            <p className="mx-auto max-w-3xl text-base leading-relaxed text-gray-600 md:text-lg">
               My professional journey and key positions.
             </p>
           </motion.div>

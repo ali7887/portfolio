@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { memo, useEffect, useRef } from 'react';
-import { motion, useInView, useMotionValue, useSpring } from 'framer-motion';
-import { Calendar, FolderKanban, Code2, Heart } from 'lucide-react';
-import { fadeInUp, staggerContainer } from '@/lib/animations';
-import { cn } from '@/lib/utils';
+import { memo, useEffect, useRef } from "react";
+import { motion, useInView, useMotionValue, useSpring } from "framer-motion";
+import { Calendar, FolderKanban, Code2, Heart } from "lucide-react";
+import { fadeInUp, staggerContainer } from "@/lib/animations";
+import { cn } from "@/lib/utils";
 
 interface StatItem {
   label: string;
@@ -16,32 +16,32 @@ interface StatItem {
 
 const stats: StatItem[] = [
   {
-    label: 'Years Experience',
+    label: "Years Experience",
     value: 10,
-    suffix: '+',
+    suffix: "+",
     icon: Calendar,
-    color: 'text-accent-primary',
+    color: "text-accent-primary",
   },
   {
-    label: 'Projects Completed',
+    label: "Projects Completed",
     value: 50,
-    suffix: '+',
+    suffix: "+",
     icon: FolderKanban,
-    color: 'text-accent-secondary',
+    color: "text-accent-secondary",
   },
   {
-    label: 'Technologies Mastered',
+    label: "Technologies Mastered",
     value: 15,
-    suffix: '+',
+    suffix: "+",
     icon: Code2,
-    color: 'text-accent-neon',
+    color: "text-accent-neon",
   },
   {
-    label: 'Client Satisfaction',
+    label: "Client Satisfaction",
     value: 100,
-    suffix: '%',
+    suffix: "%",
     icon: Heart,
-    color: 'text-accent-primary',
+    color: "text-accent-primary",
   },
 ];
 
@@ -70,7 +70,7 @@ const AnimatedCounter = memo(function AnimatedCounter({
   }, [isInView, value, motionValue]);
 
   useEffect(() => {
-    springValue.on('change', (latest) => {
+    springValue.on("change", (latest) => {
       if (ref.current) {
         ref.current.textContent = Math.floor(latest).toString();
       }
@@ -78,7 +78,7 @@ const AnimatedCounter = memo(function AnimatedCounter({
   }, [springValue]);
 
   return (
-    <span className="text-4xl md:text-5xl font-bold">
+    <span className="text-2xl font-bold md:text-3xl lg:text-4xl">
       <span ref={ref}>0</span>
       {suffix}
     </span>
@@ -91,14 +91,14 @@ const AnimatedCounter = memo(function AnimatedCounter({
  */
 export function Stats() {
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-bg-primary to-bg-secondary">
+    <section className="bg-gradient-to-b from-bg-primary to-bg-secondary px-4 py-12 sm:px-6 md:py-16 lg:px-8 lg:py-20">
       <div className="container mx-auto max-w-6xl">
         <motion.div
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 lg:gap-10"
+          className="grid grid-cols-2 gap-6 md:grid-cols-4 md:gap-8 lg:gap-10"
         >
           {stats.map((stat) => {
             const Icon = stat.icon;
@@ -107,16 +107,19 @@ export function Stats() {
                 key={stat.label}
                 variants={fadeInUp}
                 whileHover={{ y: -4, scale: 1.02 }}
-                className="bg-white rounded-xl p-6 text-center border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 will-change-transform"
+                className="rounded-xl border border-gray-200 bg-white p-6 text-center shadow-sm transition-all duration-300 will-change-transform hover:shadow-lg"
               >
                 <div className="flex flex-col items-center gap-4">
                   {/* Icon */}
                   <motion.div
                     whileHover={{ rotate: 360 }}
                     transition={{ duration: 0.6 }}
-                    className={cn('bg-white/80 backdrop-blur-sm p-3 rounded-lg border border-gray-200 shadow-sm', stat.color)}
+                    className={cn(
+                      "rounded-lg border border-gray-200 bg-white/80 p-3 shadow-sm backdrop-blur-sm",
+                      stat.color
+                    )}
                   >
-                    <Icon className="w-6 h-6" />
+                    <Icon className="h-6 w-6" />
                   </motion.div>
 
                   {/* Counter */}
@@ -125,7 +128,9 @@ export function Stats() {
                   </div>
 
                   {/* Label */}
-                  <p className="text-sm text-gray-600 font-medium">{stat.label}</p>
+                  <p className="text-sm font-medium text-gray-600">
+                    {stat.label}
+                  </p>
                 </div>
               </motion.div>
             );
@@ -135,4 +140,3 @@ export function Stats() {
     </section>
   );
 }
-
