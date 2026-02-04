@@ -186,7 +186,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 1, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-12 md:mt-16"
+            className="mt-16 md:mt-20"
           >
             {/* Glassmorphism Marquee Container */}
             <div className="relative overflow-hidden rounded-2xl border border-white/60 bg-white/40 py-4 shadow-lg backdrop-blur-md md:py-5">
