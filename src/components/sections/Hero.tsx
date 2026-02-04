@@ -63,8 +63,7 @@ export function Hero() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="relative mb-6 inline-block"
-          >
-
+          ></motion.div>
 
           {/* Name - Professional with subtle animated reveal */}
           <motion.h1
