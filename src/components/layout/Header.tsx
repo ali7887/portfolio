@@ -1,4 +1,4 @@
-'use client';
+ 'use client';
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
@@ -131,7 +131,7 @@ export function Header() {
               }}
               aria-label="Ali Kiani - Home"
             >
-              Ali Kiani
+              <>Hello World!</>
             </Link>
 
             {/* Desktop Navigation */}
