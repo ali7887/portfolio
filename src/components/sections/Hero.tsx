@@ -10,7 +10,7 @@ export function Hero() {
   return (
     <section
       id="home"
-      className="relative flex min-h-[85vh] items-center overflow-hidden pb-12 pt-20 md:pb-16 md:pt-24"
+      className="relative flex min-h-[85vh] items-center overflow-hidden pb-12 pt-28 md:pb-16 md:pt-32"
     >
       {/* Animated background elements */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -56,7 +56,7 @@ export function Hero() {
       </div>
 
       <div className="container relative z-10 mx-auto max-w-4xl px-6">
-        <div className="space-y-5 text-center md:space-y-6">
+        <div className="text-center">
           {/* Name - Professional with subtle animated reveal */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
@@ -106,7 +106,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="mb-6 flex flex-col flex-wrap justify-center gap-3 sm:flex-row md:mb-8"
+            className="mb-24 flex flex-col flex-wrap justify-center gap-3 sm:flex-row md:mb-28 "
           >
             {/* Primary CTA */}
             <motion.a
@@ -186,7 +186,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 1, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-20 md:mt-24"
+            className="mt-28 md:mt-32 "
           >
             {/* Glassmorphism Marquee Container */}
             <div className="relative overflow-hidden rounded-2xl border border-white/60 bg-white/40 py-4 shadow-lg backdrop-blur-md md:py-5">
