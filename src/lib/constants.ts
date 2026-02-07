@@ -153,10 +153,10 @@ export const SKILLS: Skill[] = [
     iconName: 'express',
   },
   {
-    name: 'Redux Toolkit',
+    name: 'Three.js',
     level: 85,
     category: 'frontend',
-    iconName: 'redux',
+    iconName: 'threejs',
   },
   {
     name: 'Tailwind CSS',
