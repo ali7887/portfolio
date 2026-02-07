@@ -179,7 +179,7 @@ export function Contact() {
             Have a project in mind? Let&apos;s discuss how we can work together.
           </p>
           <p className="mx-auto max-w-3xl text-base leading-relaxed text-gray-600 md:text-lg">
-            I'm open to remote work worldwide, any time...
+            I'm open to remote work worldwide, <span class="font-semibold text-accent-neon">any time...</span>
           </p>
         </motion.div>
 
