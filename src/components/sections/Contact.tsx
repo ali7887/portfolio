@@ -178,6 +178,9 @@ export function Contact() {
           <p className="mx-auto max-w-3xl text-base leading-relaxed text-gray-600 md:text-lg">
             Have a project in mind? Let&apos;s discuss how we can work together.
           </p>
+          <p className="mx-auto max-w-3xl text-base leading-relaxed text-gray-600 md:text-lg">
+            I'm open to remote work worldwide, any time...
+          </p>
         </motion.div>
 
         {/* Centered Contact Form */}
