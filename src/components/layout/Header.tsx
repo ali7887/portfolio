@@ -123,7 +123,7 @@ export function Header() {
             <Link
               href="/"
               className={cn(
-                'text-slate-300 transition-all duration-500 hover:text-blue-700',
+                'text-slate-200 transition-all duration-500 hover:text-blue-700',
                 isScrolled ? 'text-lg' : 'text-xl md:text-2xl'
               )}
               style={{
