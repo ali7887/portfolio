@@ -16,6 +16,7 @@ import {
   SiDocker,
   SiVercel,
   SiRedux,
+  SiThreedotjs,
   SiPrisma,
   SiEthereum,
   SiElementor,
@@ -46,6 +47,7 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   vercel: SiVercel,
   redux: SiRedux,
   prisma: SiPrisma,
+  threejs: SiThreedotjs,
   ethereum: SiEthereum,
   elementor: SiElementor,
   openai: Brain,
@@ -80,6 +82,8 @@ const iconColors: Record<string, string> = {
 
   // Page Builders - صورتی
   elementor: "#92003B", // Elementor - Deep Pink
+  // 3D Library - orange (Three.js brand)
+  threejs: "#000000",
 };
 
 /**
